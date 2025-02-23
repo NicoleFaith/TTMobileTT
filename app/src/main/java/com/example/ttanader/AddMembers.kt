@@ -42,30 +42,44 @@ class AddMembers : AppCompatActivity() {
     }
 }
 
-// ✅ Corrected Email Adapter
+
 class EmailAdapter(private val emailList: MutableList<String>) :
     RecyclerView.Adapter<EmailAdapter.EmailViewHolder>() {
 
     class EmailViewHolder(private val binding: ItemEmailBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(email: String) {
-            binding.tvEmail.text = email // ✅ Correctly bind email to TextView
+        fun bind(email: String, onRemove: (Int) -> Unit) {
+            binding.tvEmail.text = email
+            binding.btnRemove.setOnClickListener {
+                onRemove(adapterPosition) // Remove item on click
+            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmailViewHolder {
         val binding = ItemEmailBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val layoutParams = binding.root.layoutParams as ViewGroup.MarginLayoutParams
+        layoutParams.bottomMargin = 16 // Adds spacing between items
+        binding.root.layoutParams = layoutParams
         return EmailViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: EmailViewHolder, position: Int) {
-        holder.bind(emailList[position])
+        holder.bind(emailList[position]) { pos ->
+            removeEmail(pos)
+        }
     }
 
     override fun getItemCount(): Int = emailList.size
 
     fun addEmail(email: String) {
         emailList.add(email)
-        notifyDataSetChanged() // 🔥 Ensures all items refresh properly
+        notifyItemInserted(emailList.size - 1) // Notify RecyclerView of new item
+    }
+
+    private fun removeEmail(position: Int) {
+        emailList.removeAt(position)
+        notifyItemRemoved(position) // Notify RecyclerView of item removal
     }
 }
+
