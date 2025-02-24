@@ -25,9 +25,8 @@ class HomeFragment : Fragment() {
         // Find the button by its ID
         val button = view.findViewById<Button>(R.id.CreateWorkspaceBtn) // Change "myButton" to your actual Button ID
 
-        // Set OnClickListener to navigate to the new activity
         button.setOnClickListener {
-            val intent = Intent(requireContext(), Create::class.java) // Replace with your activity
+            val intent = Intent(requireContext(), Create::class.java)
             startActivity(intent)
         }
     }

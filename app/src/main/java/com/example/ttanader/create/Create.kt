@@ -1,63 +1,52 @@
 package com.example.ttanader.create
 
-import android.app.DatePickerDialog
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ttanader.AddMembers
-import com.example.ttanader.MainActivity
-import com.example.ttanader.R
-import com.google.android.material.textfield.TextInputEditText
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.ttanader.ConfirmedEmailsAdapter
+import com.example.ttanader.databinding.ActivityCreateBinding
 
 class Create : AppCompatActivity() {
+
+    private lateinit var binding: ActivityCreateBinding
+    private val confirmedEmails = mutableListOf<String>()
+    private lateinit var confirmedEmailsAdapter: ConfirmedEmailsAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_create)
 
-        // Adjust system bars
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        binding = ActivityCreateBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Setup RecyclerView
+        confirmedEmailsAdapter = ConfirmedEmailsAdapter(confirmedEmails)
+        binding.rvConfirmedEmails.layoutManager = LinearLayoutManager(this)
+        binding.rvConfirmedEmails.adapter = confirmedEmailsAdapter
+
+        // Open AddMembers activity
+        binding.NewProjectAddMembersBtn.setOnClickListener {
+            val intent = Intent(this, AddMembers::class.java)
+            startActivityForResult(intent, REQUEST_CODE_ADD_MEMBERS)
         }
+    }
 
-        // Initialize Due Date Picker
-        val dueDateEditText = findViewById<TextInputEditText>(R.id.dueDateEditText)
-        val calendar = Calendar.getInstance()
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
-        val datePicker = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            calendar.set(Calendar.YEAR, year)
-            calendar.set(Calendar.MONTH, month)
-            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-            // Format the selected date
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            dueDateEditText.setText(dateFormat.format(calendar.time))
+        if (requestCode == REQUEST_CODE_ADD_MEMBERS && resultCode == Activity.RESULT_OK) {
+            val emails = data?.getStringArrayListExtra("CONFIRMED_EMAILS")
+            emails?.let {
+                confirmedEmails.clear()
+                confirmedEmails.addAll(it)
+                confirmedEmailsAdapter.notifyDataSetChanged()
+            }
         }
+    }
 
-        dueDateEditText.setOnClickListener {
-            DatePickerDialog(
-                this,
-                datePicker,
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)
-            ).show()
-        }
-
-        val NewProjectAddMembersBtn = findViewById<Button>(R.id.NewProjectAddMembersBtn)
-
-        NewProjectAddMembersBtn.setOnClickListener {
-            val intent = Intent(this, AddMembers ::class.java)
-            startActivity(intent)
-        }
-
+    companion object {
+        private const val REQUEST_CODE_ADD_MEMBERS = 100
     }
 }

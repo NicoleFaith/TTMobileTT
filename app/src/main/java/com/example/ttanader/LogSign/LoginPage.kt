@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.ttanader.ForgotPassword
 import com.example.ttanader.MainActivity
 import com.example.ttanader.R
 
@@ -25,7 +26,8 @@ class LoginPage : AppCompatActivity() {
         }
 
         val SelLogBtn = findViewById<Button>(R.id.SelLogBtn)
-        val signUpLogPg = findViewById<Button>(R.id.signUpLogPg)
+        val signUpLogPg = findViewById<Button>(R.id.signUpLogPgBtn)
+        val ForgotPassBtn = findViewById<Button>(R.id.ForgotPassBtn)
 
         SelLogBtn.setOnClickListener {
             val intent = Intent(this, MainActivity ::class.java)
@@ -34,6 +36,11 @@ class LoginPage : AppCompatActivity() {
 
         signUpLogPg.setOnClickListener {
             val intent = Intent(this, SignUpPage ::class.java)
+            startActivity(intent)
+        }
+
+        ForgotPassBtn.setOnClickListener {
+            val intent = Intent(this, ForgotPassword ::class.java)
             startActivity(intent)
         }
 
