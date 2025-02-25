@@ -48,7 +48,8 @@
                 android:textColor="@android:color/white"
                 android:backgroundTint="@android:color/holo_red_dark"
                 android:padding="8dp"
-                android:layout_marginStart="12dp"/>
+                android:layout_marginStart="8dp"/>
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
