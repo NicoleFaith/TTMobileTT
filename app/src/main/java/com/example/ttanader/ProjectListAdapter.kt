@@ -1,4 +1,4 @@
-package com.example.ttanader.adapters
+package com.example.ttanader
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,44 +7,61 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.appcompat.app.AlertDialog
-import android.content.Context
-import android.widget.EditText
-import android.widget.Toast
-import com.example.ttanader.R
-import com.example.ttanader.TaskAdapter
 import com.example.ttanader.models.ProjectList
-import com.example.ttanader.models.Task
 
 class ProjectListAdapter(
     private val lists: MutableList<ProjectList>,
+    private val isAdmin: Boolean, // Check if the user is an admin
+    private val currentUser: String, // The logged-in user
+    private val teamMembers: List<String>, // List of team members
     private val onAddTaskClick: (Int) -> Unit // Callback function to handle adding tasks
-) : RecyclerView.Adapter<ProjectListAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ProjectListAdapter.ProjectListViewHolder>() {
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ProjectListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val listTitle: TextView = itemView.findViewById(R.id.tvListTitle)
         val btnAddTask: Button = itemView.findViewById(R.id.btnAddTask)
         val rvTasks: RecyclerView = itemView.findViewById(R.id.rvTasks)
-    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
-        return ViewHolder(view)
-    }
+        fun bind(
+            list: ProjectList,
+            isAdmin: Boolean,
+            currentUser: String,
+            teamMembers: List<String>,
+            onAddTaskClick: (Int) -> Unit,
+            position: Int
+        ) {
+            listTitle.text = list.name
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val list = lists[position]
-        holder.listTitle.text = list.name
+            // Set up RecyclerView only if not already set
+            if (rvTasks.adapter == null) {
+                rvTasks.layoutManager = LinearLayoutManager(itemView.context)
+                rvTasks.adapter = TaskAdapter(
+                    context = itemView.context,
+                    tasks = list.tasks,
+                    isAdmin = isAdmin,
+                    currentUser = currentUser,
+                    teamMembers = teamMembers
+                )
+            } else {
+                // Update TaskAdapter data when binding
+                (rvTasks.adapter as TaskAdapter).updateTasks(list.tasks)
+            }
 
-        // Set up Task RecyclerView
-        holder.rvTasks.layoutManager = LinearLayoutManager(holder.itemView.context)
-        val taskAdapter = TaskAdapter(holder.itemView.context, list.tasks)
-        holder.rvTasks.adapter = taskAdapter
-
-        // Handle Add Task Button Click
-        holder.btnAddTask.setOnClickListener {
-            onAddTaskClick(position) // Trigger the callback when clicking "Add Task"
+            // Handle "Add Task" button click
+            btnAddTask.setOnClickListener {
+                onAddTaskClick(position)
+            }
         }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProjectListViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
+        return ProjectListViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ProjectListViewHolder, position: Int) {
+        val list = lists[position]
+        holder.bind(list, isAdmin, currentUser, teamMembers, onAddTaskClick, position)
     }
 
     override fun getItemCount(): Int = lists.size
@@ -52,5 +69,11 @@ class ProjectListAdapter(
     fun addList(newList: ProjectList) {
         lists.add(newList)
         notifyItemInserted(lists.size - 1)
+    }
+
+    fun updateLists(updatedLists: List<ProjectList>) {
+        lists.clear()
+        lists.addAll(updatedLists)
+        notifyDataSetChanged()
     }
 }

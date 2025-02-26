@@ -13,20 +13,27 @@
         android:theme="@style/Theme.TTAnader"
         tools:targetApi="31">
         <activity
-            android:name=".models.Task"
+            android:name=".TaskDetails"
             android:exported="false" />
         <activity
+            android:name=".models.Task"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
             android:name=".TaskAdapter"
-            android:exported="false" />
+            android:exported="false"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".ProjectList"
             android:exported="false" />
         <activity
             android:name=".ProjectListAdapter"
-            android:exported="false" />
+            android:exported="false"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".ConfirmedEmailsAdapter"
-            android:exported="false" />
+            android:exported="false"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".UserProject"
             android:exported="false" />

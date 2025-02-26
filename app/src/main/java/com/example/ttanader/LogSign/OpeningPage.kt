@@ -1,5 +1,6 @@
 package com.example.ttanader.LogSign
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -16,6 +17,7 @@ class OpeningPage : AppCompatActivity() {
     private var progressStatus = 0
     private val handler = Handler(Looper.getMainLooper())
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()

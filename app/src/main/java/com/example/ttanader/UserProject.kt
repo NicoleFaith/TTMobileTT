@@ -9,7 +9,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ttanader.adapters.ProjectListAdapter
 import com.example.ttanader.models.ProjectList
 import com.example.ttanader.models.Task
 
@@ -41,10 +40,10 @@ class UserProject : AppCompatActivity() {
 
     private fun showAddListDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("New List")
+        builder.setTitle("New Project")
 
         val input = EditText(this)
-        input.hint = "Enter list name"
+        input.hint = "Enter New Project name"
         builder.setView(input)
 
         builder.setPositiveButton("Add") { _, _ ->
@@ -54,7 +53,7 @@ class UserProject : AppCompatActivity() {
                 projectLists.add(newList)  // ✅ Add it to the List
                 adapter.notifyDataSetChanged() // ✅ Refresh RecyclerView
             } else {
-                Toast.makeText(this, "List name cannot be empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Project name cannot be empty", Toast.LENGTH_SHORT).show()
             }
         }
 

@@ -8,14 +8,17 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ttanader.adapters.ProjectListAdapter
 import com.example.ttanader.models.ProjectList
 import com.example.ttanader.models.Task
 
-class ProjectList : AppCompatActivity() {
+class ProjectListActivity : AppCompatActivity() {
 
     private lateinit var adapter: ProjectListAdapter
     private val projectLists = mutableListOf<ProjectList>()
+
+    private val isAdmin = true // Change this based on actual user role logic
+    private val currentUser = "user@example.com" // Change to actual logged-in user
+    private val teamMembers = listOf("Alice", "Bob", "Charlie") // Sample members
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,16 +27,31 @@ class ProjectList : AppCompatActivity() {
         // Set up RecyclerView for project lists
         val recyclerView = findViewById<RecyclerView>(R.id.rvProjectLists)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        adapter = ProjectListAdapter(projectLists) { listIndex -> showAddTaskDialog(listIndex) }
+
+        adapter = ProjectListAdapter(
+            lists = projectLists,
+            isAdmin = isAdmin,
+            currentUser = currentUser,
+            teamMembers = teamMembers,
+            onAddTaskClick = { listIndex ->
+                if (listIndex in projectLists.indices) {
+                    showAddTaskDialog(listIndex)
+                } else {
+                    Toast.makeText(this, "Invalid project list", Toast.LENGTH_SHORT).show()
+                }
+            }
+        )
+
         recyclerView.adapter = adapter
 
         // Handle "Add List" button click
         findViewById<Button>(R.id.btnAddList).setOnClickListener {
-            showAddListDialog()
+            showAddProjectDialog()
         }
     }
 
-    private fun showAddListDialog() {
+    // Show dialog to add a new project list
+    private fun showAddProjectDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("New Project")
 
@@ -44,10 +62,11 @@ class ProjectList : AppCompatActivity() {
         builder.setPositiveButton("Add") { _, _ ->
             val listName = input.text.toString().trim()
             if (listName.isNotEmpty()) {
-                val newList = ProjectList(listName)
-                adapter.addList(newList)
+                val newList = ProjectList(name = listName, tasks = mutableListOf()) // Initialize tasks list
+                projectLists.add(newList)
+                adapter.notifyItemInserted(projectLists.size - 1)
             } else {
-                Toast.makeText(this, "List name cannot be empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Project name cannot be empty", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -55,6 +74,7 @@ class ProjectList : AppCompatActivity() {
         builder.show()
     }
 
+    // Show dialog to add a task inside a project list
     private fun showAddTaskDialog(listIndex: Int) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("New Task")
@@ -66,8 +86,13 @@ class ProjectList : AppCompatActivity() {
         builder.setPositiveButton("Add") { _, _ ->
             val taskName = input.text.toString().trim()
             if (taskName.isNotEmpty()) {
-                projectLists[listIndex].tasks.add(Task(taskName)) // Add task to selected list
-                adapter.notifyItemChanged(listIndex) // Update UI
+                if (listIndex in projectLists.indices) {
+                    val newTask = Task(name = taskName)
+                    projectLists[listIndex].tasks.add(newTask)
+                    adapter.notifyItemChanged(listIndex) // Update UI
+                } else {
+                    Toast.makeText(this, "Invalid project list", Toast.LENGTH_SHORT).show()
+                }
             } else {
                 Toast.makeText(this, "Task name cannot be empty", Toast.LENGTH_SHORT).show()
             }
