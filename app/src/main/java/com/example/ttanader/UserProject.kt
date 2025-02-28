@@ -59,9 +59,9 @@ class UserProject : AppCompatActivity() {
         builder.setPositiveButton("Add") { _, _ ->
             val listName = input.text.toString().trim()
             if (listName.isNotEmpty()) {
-                val newList = ProjectList(listName, mutableListOf()) // ✅ Create a New Project List
-                projectLists.add(newList)  // ✅ Add to the list
-                adapter.notifyItemInserted(projectLists.size - 1) // ✅ Update UI properly
+                val newList = ProjectList(listName, mutableListOf()) // Create a New Project List
+                projectLists.add(newList)  //  Add to the list
+                adapter.notifyItemInserted(projectLists.size - 1) // Update UI properly
             } else {
                 Toast.makeText(this, "Project name cannot be empty", Toast.LENGTH_SHORT).show()
             }
