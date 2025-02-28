@@ -2,7 +2,6 @@ package com.example.ttanader
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -12,29 +11,39 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ttanader.models.ProjectList
 import com.example.ttanader.models.Task
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class UserProject : AppCompatActivity() {
 
     private lateinit var adapter: ProjectListAdapter
-    private val projectLists = mutableListOf<ProjectList>() // ✅ Mutable List of ProjectLists
-    private val currentUser = "user123" // ✅ Mock current user (Replace with actual user ID)
-    private val isAdmin = true // ✅ Mock admin status (Replace with actual check)
-    private val teamMembers = listOf("Alice", "Bob", "Charlie") // ✅ Mock team members
+    private val projectLists = mutableListOf<ProjectList>()
+    private val currentUser = "user123"
+    private val isAdmin = true
+    private val teamMembers = listOf("Alice", "Bob", "Charlie")
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_project)
 
-        // ✅ Set Team Name in Header
-        val teamName = intent.getStringExtra("TEAM_NAME")
-        findViewById<TextView>(R.id.tvTeamTitle).text = teamName ?: "No Team Name"
+        // Set Team Name in Header
+        val teamName = intent.getStringExtra("TEAM_NAME") ?: "No Team Name"
+        findViewById<TextView>(R.id.tvTeamTitle)?.text = teamName
 
-        // ✅ Set up RecyclerView for Project Lists
+        setupRecyclerView()
+
+        // Handle "Add List" Button Click
+        val btnAddProject = findViewById<FloatingActionButton>(R.id.btnAddProject)
+
+        btnAddProject.setOnClickListener {
+            showAddListDialog() // Ensure the function is called when clicked
+        }
+    }
+
+    private fun setupRecyclerView() {
         val recyclerView = findViewById<RecyclerView>(R.id.rvProjectLists)
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        // ✅ Pass the required parameters to ProjectListAdapter
         adapter = ProjectListAdapter(
             lists = projectLists,
             isAdmin = isAdmin,
@@ -42,30 +51,25 @@ class UserProject : AppCompatActivity() {
             teamMembers = teamMembers
         ) { listIndex -> showAddTaskDialog(listIndex) }
 
-        recyclerView.adapter = adapter
-
-        // ✅ Handle "Add List" Button Click
-        findViewById<Button>(R.id.btnAddProject).setOnClickListener {
-            showAddListDialog()
-        }
+        recyclerView?.adapter = adapter
     }
 
     private fun showAddListDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("New Project")
 
-        val input = EditText(this)
-        input.hint = "Enter New Project name"
+        val input = EditText(this).apply {
+            hint = "Enter New Project name"
+        }
         builder.setView(input)
 
         builder.setPositiveButton("Add") { _, _ ->
             val listName = input.text.toString().trim()
             if (listName.isNotEmpty()) {
-                val newList = ProjectList(listName, mutableListOf()) // Create a New Project List
-                projectLists.add(newList)  //  Add to the list
-                adapter.notifyItemInserted(projectLists.size - 1) // Update UI properly
+                projectLists.add(ProjectList(listName, mutableListOf()))
+                adapter.notifyDataSetChanged()
             } else {
-                Toast.makeText(this, "Project name cannot be empty", Toast.LENGTH_SHORT).show()
+                showToast("Project name cannot be empty")
             }
         }
 
@@ -74,29 +78,34 @@ class UserProject : AppCompatActivity() {
     }
 
     private fun showAddTaskDialog(listIndex: Int) {
+        if (listIndex !in projectLists.indices) {
+            showToast("Invalid project list selected")
+            return
+        }
+
         val builder = AlertDialog.Builder(this)
         builder.setTitle("New Task")
 
-        val input = EditText(this)
-        input.hint = "Enter task name"
+        val input = EditText(this).apply {
+            hint = "Enter task name"
+        }
         builder.setView(input)
 
         builder.setPositiveButton("Add") { _, _ ->
             val taskName = input.text.toString().trim()
             if (taskName.isNotEmpty()) {
-                // ✅ Ensure index is valid before accessing
-                if (listIndex in projectLists.indices) {
-                    projectLists[listIndex].tasks.add(Task(taskName)) // ✅ Add task
-                    adapter.notifyItemChanged(listIndex) // ✅ Update UI properly
-                } else {
-                    Toast.makeText(this, "Invalid list selected", Toast.LENGTH_SHORT).show()
-                }
+                projectLists[listIndex].tasks.add(Task(taskName))
+                adapter.notifyItemChanged(listIndex)
             } else {
-                Toast.makeText(this, "Task name cannot be empty", Toast.LENGTH_SHORT).show()
+                showToast("Task name cannot be empty")
             }
         }
 
         builder.setNegativeButton("Cancel", null)
         builder.show()
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

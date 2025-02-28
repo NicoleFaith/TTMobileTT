@@ -48,11 +48,13 @@
 
             <!-- Email Input -->
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:textColorHint="@color/gray"
-                app:boxStrokeColor="@color/black"
+                app:boxBackgroundMode="outline"
+                android:background="@color/white"
+                app:boxStrokeColor="@color/white"
                 android:hint="Enter Email">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -64,18 +66,21 @@
                     android:textColorHint="@color/gray"
                     android:textSize="16sp"
                     android:drawableTint="@color/black"
-                    android:drawableStart="@drawable/baseline_email_24"
+                    android:drawableEnd="@drawable/baseline_email_24"
                     android:drawablePadding="10dp"
                     android:padding="12dp"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Password Input -->
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:textColorHint="@color/gray"
-                app:boxStrokeColor="@color/black"
+                app:boxBackgroundMode="outline"
+                android:background="@color/white"
+                app:boxStrokeColor="@color/white"
                 android:hint="Enter Password">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -87,7 +92,7 @@
                     android:drawableTint="@color/black"
                     android:textSize="16sp"
                     android:background="@color/white"
-                    android:drawableStart="@drawable/baseline_lock_24"
+                    android:drawableEnd="@drawable/baseline_lock_24"
                     android:drawablePadding="10dp"
                     android:padding="12dp"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -135,8 +140,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sign Up"
-                    android:textAllCaps="false"
+                    android:textAllCaps="true"
                     android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_marginStart="4dp"/>
             </LinearLayout>
 

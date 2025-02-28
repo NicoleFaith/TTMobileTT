@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/white"
     tools:context=".UserProject">
 
     <!-- Header Section -->
@@ -14,7 +14,7 @@
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:elevation="6dp"
+        android:elevation="8dp"
         app:cardCornerRadius="0dp"
         app:cardBackgroundColor="@color/black"
         app:layout_constraintTop_toTopOf="parent">
@@ -26,6 +26,7 @@
             android:gravity="center_vertical"
             android:padding="16dp">
 
+            <!-- Back Button -->
             <ImageButton
                 android:id="@+id/btnBack"
                 android:layout_width="40dp"
@@ -33,8 +34,12 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/baseline_arrow_back_24"
                 android:contentDescription="Back Button"
-                app:tint="@color/white" />
+                android:scaleType="centerInside"
+                android:padding="8dp"
+                app:tint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"/>
 
+            <!-- Team Title -->
             <TextView
                 android:id="@+id/tvTeamTitle"
                 android:layout_width="0dp"
@@ -50,31 +55,31 @@
     </androidx.cardview.widget.CardView>
 
     <!-- RecyclerView for Project Lists -->
-
-    <!-- Floating Button to Add a New Project List -->
     <androidx.recyclerview.widget.RecyclerView
-        android:background="@color/white"
         android:id="@+id/rvProjectLists"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="10dp"
+        android:clipToPadding="false"
+        android:background="@color/white"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/fabAddList"
         app:layout_constraintTop_toBottomOf="@id/headerLayout"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="0dp"
+        app:layout_constraintBottom_toTopOf="@id/btnAddProject"
         tools:listitem="@layout/list_item" />
 
+    <!-- Floating Action Button for Adding Projects -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/baseline_add_24"
-        android:tint="@color/white"
-        app:backgroundTint="@color/black"
+        android:id="@+id/btnAddProject"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        app:srcCompat="@drawable/baseline_add_24"
+        android:tint="@color/black"
+        android:elevation="12dp"
+        app:backgroundTint="@color/white"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"
         android:contentDescription="Add List"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
