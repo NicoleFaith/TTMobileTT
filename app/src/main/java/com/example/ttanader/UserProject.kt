@@ -1,8 +1,12 @@
 package com.example.ttanader
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -16,10 +20,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class UserProject : AppCompatActivity() {
 
     private lateinit var adapter: ProjectListAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var leftArrow: ImageView
+    private lateinit var rightArrow: ImageView
+
     private val projectLists = mutableListOf<ProjectList>()
     private val currentUser = "user123"
     private val isAdmin = true
     private val teamMembers = listOf("Alice", "Bob", "Charlie")
+    private var hasShownScrollHint = false  // Prevents repeated toast messages
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,19 +39,27 @@ class UserProject : AppCompatActivity() {
         val teamName = intent.getStringExtra("TEAM_NAME") ?: "No Team Name"
         findViewById<TextView>(R.id.tvTeamTitle)?.text = teamName
 
+        recyclerView = findViewById(R.id.rvProjectLists)
+        leftArrow = findViewById(R.id.leftArrow)
+        rightArrow = findViewById(R.id.rightArrow)
+
         setupRecyclerView()
 
         // Handle "Add List" Button Click
         val btnAddProject = findViewById<FloatingActionButton>(R.id.btnAddProject)
-
         btnAddProject.setOnClickListener {
-            showAddListDialog() // Ensure the function is called when clicked
+            showAddListDialog()
+        }
+
+        // Handle Back Button Click to go to HomeFragment
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+        btnBack.setOnClickListener {
+            navigateToHome()
         }
     }
 
     private fun setupRecyclerView() {
-        val recyclerView = findViewById<RecyclerView>(R.id.rvProjectLists)
-        recyclerView?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         adapter = ProjectListAdapter(
             lists = projectLists,
@@ -51,7 +68,34 @@ class UserProject : AppCompatActivity() {
             teamMembers = teamMembers
         ) { listIndex -> showAddTaskDialog(listIndex) }
 
-        recyclerView?.adapter = adapter
+        recyclerView.adapter = adapter
+
+        // Initial visibility check for arrows
+        updateArrowVisibility()
+
+        // Scroll Listener to show/hide arrows dynamically
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                updateArrowVisibility()
+            }
+        })
+
+        // Show scroll hint only once when there are enough projects
+        recyclerView.post {
+            if (!hasShownScrollHint && projectLists.size > 1) {
+                showToast("Swipe left/right to see more projects")
+                hasShownScrollHint = true
+            }
+        }
+    }
+
+    private fun updateArrowVisibility() {
+        val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+        val firstVisibleItem = layoutManager.findFirstCompletelyVisibleItemPosition()
+        val lastVisibleItem = layoutManager.findLastCompletelyVisibleItemPosition()
+
+        leftArrow.visibility = if (firstVisibleItem > 0) View.VISIBLE else View.GONE
+        rightArrow.visibility = if (lastVisibleItem < adapter.itemCount - 1) View.VISIBLE else View.GONE
     }
 
     private fun showAddListDialog() {
@@ -68,6 +112,7 @@ class UserProject : AppCompatActivity() {
             if (listName.isNotEmpty()) {
                 projectLists.add(ProjectList(listName, mutableListOf()))
                 adapter.notifyDataSetChanged()
+                recyclerView.post { updateArrowVisibility() }
             } else {
                 showToast("Project name cannot be empty")
             }
@@ -107,5 +152,12 @@ class UserProject : AppCompatActivity() {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun navigateToHome() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
+        finish()
     }
 }
