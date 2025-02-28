@@ -54,7 +54,7 @@
             android:exported="false" />
         <activity
             android:name=".LogSign.LoginPage"
-            android:exported="false" /> <!-- ✅ Only this activity has the LAUNCHER -->
+            android:exported="false" /> <!--Only this activity has the LAUNCHER -->
         <activity
             android:name=".LogSign.OpeningPage"
             android:exported="true">

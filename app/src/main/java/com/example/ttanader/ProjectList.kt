@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ttanader.models.ProjectList
 import com.example.ttanader.models.Task
 
-class ProjectListActivity : AppCompatActivity() {
+class ProjectList : AppCompatActivity() {
 
     private lateinit var adapter: ProjectListAdapter
     private val projectLists = mutableListOf<ProjectList>()
@@ -45,7 +45,7 @@ class ProjectListActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         // Handle "Add List" button click
-        findViewById<Button>(R.id.btnAddList).setOnClickListener {
+        findViewById<Button>(R.id.btnAddProject).setOnClickListener {
             showAddProjectDialog()
         }
     }

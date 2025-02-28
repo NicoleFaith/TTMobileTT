@@ -1,180 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/gray"
     tools:context=".ProjectFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- Title Header -->
     <TextView
+        android:id="@+id/tvProjectsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="30dp"
         android:text="Projects"
-        android:textColor="@color/dark_blue"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="@color/gray"
+        android:layout_margin="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    <ScrollView
+    <!-- RecyclerView for Project List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvProjects"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="90dp"
-        android:layout_marginBottom="20dp"
-        android:overScrollMode="never">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:paddingHorizontal="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/tvProjectsTitle"
+        app:layout_constraintBottom_toTopOf="@id/fabAddProject"
+        tools:listitem="@layout/item_project_card"/>
 
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:background="@drawable/containerbg"
-            android:text="Project Name"
-            android:textStyle="bold"
-            android:paddingStart="12dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:textColor="@color/white"/>
+    <!-- Floating Action Button (FAB) for Adding a Project -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddProject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_add_24"
+        android:tint="@color/white"
+        app:backgroundTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="20dp"
+        android:contentDescription="Add Project"/>
 
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:background="@drawable/containerbg"
-            android:text="Project Name"
-            android:textStyle="bold"
-            android:paddingStart="12dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:textColor="@color/white"/>
-
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:background="@drawable/containerbg"
-            android:text="Project Name"
-            android:textStyle="bold"
-            android:paddingStart="12dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:textColor="@color/white"/>
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:background="@drawable/containerbg"
-            android:text="Project Name"
-            android:textStyle="bold"
-            android:paddingStart="12dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:textColor="@color/white"/>
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:background="@drawable/containerbg"
-            android:text="Project Name"
-            android:textStyle="bold"
-            android:paddingStart="12dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:textColor="@color/white"/>
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:background="@drawable/containerbg"
-            android:text="Project Name"
-            android:textStyle="bold"
-            android:paddingStart="12dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:textColor="@color/white"/>
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:background="@drawable/containerbg"
-            android:text="Project Name"
-            android:textStyle="bold"
-            android:paddingStart="12dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:textColor="@color/white"/>
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:background="@drawable/containerbg"
-            android:text="Project Name"
-            android:textStyle="bold"
-            android:paddingStart="12dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:textColor="@color/white"/>
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:background="@drawable/containerbg"
-            android:text="Project Name"
-            android:textStyle="bold"
-            android:paddingStart="12dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:textColor="@color/white"/>
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:background="@drawable/containerbg"
-            android:text="Project Name"
-            android:textStyle="bold"
-            android:paddingStart="12dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:textColor="@color/white"/>
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:background="@drawable/containerbg"
-            android:text="Project Name"
-            android:textStyle="bold"
-            android:paddingStart="12dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:textColor="@color/white"/>
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:background="@drawable/containerbg"
-            android:text="Project Name"
-            android:textStyle="bold"
-            android:paddingStart="12dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:textColor="@color/white"/>
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:background="@drawable/containerbg"
-            android:text="Project Name"
-            android:textStyle="bold"
-            android:paddingStart="12dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:textColor="@color/white"/>
-
-
-    </LinearLayout>
-    </ScrollView>
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

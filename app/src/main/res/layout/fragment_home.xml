@@ -15,27 +15,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:background="@color/white"
         android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginTop="-200dp"
-            android:src="@drawable/team"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="15dp"
-            android:textColor="@color/blueblue"
+            android:textColor="@color/black"
             android:text="No projects yet. Create one to get started!"/>
 
 
     </LinearLayout>
 
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/CreateWorkspaceBtn"
         android:layout_width="500dp"
         android:layout_height="wrap_content"
@@ -46,6 +41,7 @@
         android:layout_marginTop="600dp"
         android:layout_marginLeft="200dp"
         android:drawableStart="@drawable/baseline_add_24"
+        android:backgroundTint="@color/black"
         />
 
 

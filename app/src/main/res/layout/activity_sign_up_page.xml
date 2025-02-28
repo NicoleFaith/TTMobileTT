@@ -1,149 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LogSign.SignUpPage"
-    android:background="@color/dark_blue">
+    android:background="@color/black">
 
     <LinearLayout
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_centerVertical="true">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
 
+        <!-- Logo Image -->
         <ImageView
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/signupfillpic"
-            android:layout_marginTop="1dp"/>
+            android:src="@drawable/signupfillpic" />
 
+        <!-- Signup Form Container -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="533dp"
+            android:layout_height="match_parent"
             android:background="@drawable/boxcontainers"
             android:orientation="vertical"
-            android:gravity="center">
+            android:padding="20dp"
+            android:elevation="6dp"
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Register"
-                android:textColor="@color/dark_blue"
+                android:textColor="@color/black"
                 android:gravity="center"
-                android:textSize="37dp"
-                android:fontFamily="@font/interblack"/>
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/interblack"
+                android:paddingBottom="10dp"/>
 
-            <EditText
-                android:id="@+id/FirstNameFillUpSign"
+            <!-- Input Fields -->
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:drawableStart="@drawable/baseline_person_24"
-                android:drawablePadding="10dp"
-                android:hint="Enter First Name"
-                android:padding="10dp"
-                android:textColor="@color/dark_blue"
-                android:textColorHint="#002D48"
-                android:textSize="16dp" />
+                android:layout_marginTop="10dp"
+                android:textColorHint="@color/gray"
+                android:hint="First Name"
+                app:boxStrokeColor="@color/black"
+                app:boxBackgroundMode="outline">
 
-            <EditText
-                android:id="@+id/LastNameFillUpSign"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/FirstNameFillUpSign"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:drawableStart="@drawable/baseline_person_24"
+                    android:drawableTint="@color/black"
+                    android:drawablePadding="12dp"
+                    android:background="@color/white"
+                    android:textSize="16sp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:drawableStart="@drawable/baseline_person_24"
-                android:drawablePadding="10dp"
-                android:hint="Enter Last Name"
-                android:padding="10dp"
-                android:textColor="@color/dark_blue"
-                android:textColorHint="#002D48"
-                android:textSize="16dp" />
+                android:layout_marginTop="10dp"
+                android:hint="Last Name"
+                android:textColorHint="@color/gray"
+                app:boxStrokeColor="@color/black"
+                app:boxBackgroundMode="outline">
 
-            <EditText
-                android:id="@+id/emailFillUpSign"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/LastNameFillUpSign"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:drawableStart="@drawable/baseline_person_24"
+                    android:drawableTint="@color/black"
+                    android:drawablePadding="12dp"
+                    android:background="@color/white"
+                    android:textSize="16sp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:drawableStart="@drawable/baseline_email_24"
-                android:drawablePadding="10dp"
-                android:hint="Enter Email"
-                android:padding="10dp"
-                android:textColor="@color/dark_blue"
-                android:textColorHint="#002D48"
-                android:textSize="16dp" />
+                android:layout_marginTop="10dp"
+                android:hint="Email"
+                android:textColorHint="@color/gray"
+                app:boxStrokeColor="@color/black"
+                app:boxBackgroundMode="outline">
 
-            <EditText
-                android:id="@+id/passwordFillUpSign"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailFillUpSign"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:drawableStart="@drawable/baseline_email_24"
+                    android:drawableTint="@color/black"
+                    android:drawablePadding="12dp"
+                    android:background="@color/white"
+                    android:textSize="16sp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:drawableStart="@drawable/baseline_lock_24"
-                android:drawablePadding="10dp"
-                android:hint="Enter Password"
-                android:padding="10dp"
-                android:textColor="@color/dark_blue"
-                android:textColorHint="#002D48"
-                android:textSize="16dp" />
+                android:layout_marginTop="10dp"
+                android:hint="Password"
+                android:textColorHint="@color/gray"
+                app:boxStrokeColor="@color/black"
+                app:boxBackgroundMode="outline">
 
-            <Button
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordFillUpSign"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:textColor="@color/black"
+                    android:drawableStart="@drawable/baseline_lock_24"
+                    android:drawableTint="@color/black"
+                    android:drawablePadding="12dp"
+                    android:background="@color/white"
+                    android:textSize="16sp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Sign Up Button -->
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/SelSignUpBtn"
-                android:layout_width="260dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="20dp"
                 android:text="Sign Up"
+                android:textAllCaps="false"
+                android:textSize="16sp"
                 android:textColor="@color/white"
-                android:textFontWeight="600"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:cornerRadius="50dp"
+                android:backgroundTint="@color/black"
+                app:iconPadding="10dp"/>
 
+            <!-- Login Redirect -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Don't have an account?"
-                    android:textColor="@color/dark_blue" />
+                    android:text="Already have an account?"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"/>
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/LoginSignUpPg"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="70dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Login"
+                    android:text="Sign Up"
                     android:textAllCaps="false"
-                    android:textColor="@color/light_blue" />
-
+                    android:textColor="@color/black"
+                    android:layout_marginStart="4dp"/>
             </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

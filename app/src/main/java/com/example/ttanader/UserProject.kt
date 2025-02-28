@@ -1,5 +1,6 @@
 package com.example.ttanader
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -20,6 +21,7 @@ class UserProject : AppCompatActivity() {
     private val isAdmin = true // ✅ Mock admin status (Replace with actual check)
     private val teamMembers = listOf("Alice", "Bob", "Charlie") // ✅ Mock team members
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_project)
@@ -43,7 +45,7 @@ class UserProject : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         // ✅ Handle "Add List" Button Click
-        findViewById<Button>(R.id.btnAddList).setOnClickListener {
+        findViewById<Button>(R.id.btnAddProject).setOnClickListener {
             showAddListDialog()
         }
     }

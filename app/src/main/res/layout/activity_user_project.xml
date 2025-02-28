@@ -6,62 +6,75 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/black"
     tools:context=".UserProject">
 
     <!-- Header Section -->
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
-        android:background="@color/dark_blue"
-        android:padding="16dp"
-        tools:ignore="MissingConstraints">
+        android:layout_height="80dp"
+        android:elevation="6dp"
+        app:cardCornerRadius="0dp"
+        app:cardBackgroundColor="@color/black"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/btnBack"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Back"
-            android:textColor="@color/white"
-            android:drawableLeft="@drawable/baseline_arrow_back_24"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tvTeamTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:text="Team Name"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold"/>
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/baseline_arrow_back_24"
+                android:contentDescription="Back Button"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/tvTeamTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Team Name"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:gravity="center"/>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <!-- RecyclerView for Project Lists -->
+
+    <!-- Floating Button to Add a New Project List -->
     <androidx.recyclerview.widget.RecyclerView
+        android:background="@color/white"
         android:id="@+id/rvProjectLists"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="10dp"
-        app:layout_constraintTop_toBottomOf="@id/headerLayout"
-        app:layout_constraintBottom_toTopOf="@id/btnAddList"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/list_item"/>
+        app:layout_constraintBottom_toTopOf="@id/fabAddList"
+        app:layout_constraintTop_toBottomOf="@id/headerLayout"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp"
+        tools:listitem="@layout/list_item" />
 
-    <!-- Button to Add a New Project List -->
-    <Button
-        android:id="@+id/btnAddList"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+ Add List"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/dark_blue"
+        android:src="@drawable/baseline_add_24"
+        android:tint="@color/white"
+        app:backgroundTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="20dp"/>
+        android:layout_margin="16dp"
+        android:contentDescription="Add List"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

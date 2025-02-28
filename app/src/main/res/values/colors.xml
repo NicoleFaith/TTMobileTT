@@ -2,12 +2,23 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="dark_blue">#002D48</color>
-    <color name="light_blue">#7BADC4</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="blueblue">#1E1D63</color>
-    <color name="light_blue2">#0490DD</color>
-    <color name="purple">#3E168A</color>
-    <color name="red">#FF2C2C</color>
-    <color name="dark_red">#8b0000</color>
+    <color name="gray">#808080</color>
+
+    <color name="todo_bg">#FFFFFF</color>  <!-- White -->
+    <color name="todo_stroke">#B0B0B0</color>  <!-- Gray -->
+    <color name="todo_text">#000000</color>  <!-- Black -->
+
+    <color name="in_progress_bg">#D3D3D3</color>  <!-- Light Gray -->
+    <color name="in_progress_stroke">#808080</color>  <!-- Medium Gray -->
+    <color name="in_progress_text">#000000</color>  <!-- Black -->
+
+    <color name="completed_bg">#000000</color>  <!-- Black -->
+    <color name="completed_stroke">#FFFFFF</color>  <!-- White -->
+    <color name="completed_text">#FFFFFF</color>  <!-- White -->
+
+    <color name="chip_unselected">#E0E0E0</color> <!-- Light gray when unselected -->
+    <color name="chip_default">#FFEEEEEE</color>   <!-- Light gray for default -->
+
+
+
 </resources>
