@@ -8,13 +8,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ttanader.models.ProjectList
+import com.example.ttanader.models.Task
 
 class ProjectListAdapter(
     private val lists: MutableList<ProjectList>,
-    private val isAdmin: Boolean, // Check if the user is an admin
-    private val currentUser: String, // The logged-in user
-    private val teamMembers: List<String>, // List of team members
-    private val onAddTaskClick: (Int) -> Unit // Callback function to handle adding tasks
+    private val isAdmin: Boolean, // ✅ Check if the user is an admin
+    private val currentUser: String, // ✅ The logged-in user
+    private val teamMembers: List<String>, // ✅ List of team members
+    private val onAddTaskClick: (Int) -> Unit // ✅ Callback function to handle adding tasks
 ) : RecyclerView.Adapter<ProjectListAdapter.ProjectListViewHolder>() {
 
     class ProjectListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -32,22 +33,25 @@ class ProjectListAdapter(
         ) {
             listTitle.text = list.name
 
-            // Set up RecyclerView only if not already set
+            // ✅ Only the admin can see the "Add Task" button
+            btnAddTask.visibility = if (isAdmin) View.VISIBLE else View.GONE
+
+            // ✅ Set up RecyclerView for tasks
             if (rvTasks.adapter == null) {
                 rvTasks.layoutManager = LinearLayoutManager(itemView.context)
                 rvTasks.adapter = TaskAdapter(
                     context = itemView.context,
-                    tasks = list.tasks,
-                    isAdmin = isAdmin,
+                    tasks = list.tasks.toMutableList(), // ✅ Ensure it's mutable
                     currentUser = currentUser,
+                    isAdmin = isAdmin,
                     teamMembers = teamMembers
                 )
             } else {
-                // Update TaskAdapter data when binding
-                (rvTasks.adapter as TaskAdapter).updateTasks(list.tasks)
+                // ✅ Update TaskAdapter with new tasks
+                (rvTasks.adapter as TaskAdapter).updateTasks(list.tasks.toMutableList())
             }
 
-            // Handle "Add Task" button click
+            // ✅ Handle "Add Task" button click
             btnAddTask.setOnClickListener {
                 onAddTaskClick(position)
             }
@@ -66,14 +70,24 @@ class ProjectListAdapter(
 
     override fun getItemCount(): Int = lists.size
 
+    // ✅ Add a new list dynamically
     fun addList(newList: ProjectList) {
         lists.add(newList)
         notifyItemInserted(lists.size - 1)
     }
 
+    // ✅ Update the entire project list dynamically
     fun updateLists(updatedLists: List<ProjectList>) {
         lists.clear()
         lists.addAll(updatedLists)
         notifyDataSetChanged()
+    }
+
+    // ✅ Update a specific project's task list
+    fun updateTaskList(listIndex: Int, updatedTasks: MutableList<Task>) {
+        if (listIndex in lists.indices) {
+            lists[listIndex].tasks = updatedTasks
+            notifyItemChanged(listIndex)
+        }
     }
 }

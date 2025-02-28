@@ -1,7 +1,6 @@
 package com.example.ttanader
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,14 +12,14 @@ import com.example.ttanader.models.Task
 class TaskAdapter(
     private val context: Context,
     private val tasks: MutableList<Task>,
-    private val isAdmin: Boolean, // Check if the user is an admin
-    private val currentUser: String, // The logged-in user
-    private val teamMembers: List<String> // List of all team members
+    private val currentUser: String, // ✅ The logged-in user
+    private val isAdmin: Boolean, // ✅ If the user is an admin
+    private val teamMembers: List<String> // ✅ Dynamic list of team members
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val taskName: TextView = itemView.findViewById(R.id.tvTaskName)
-        val checkBox: CheckBox = itemView.findViewById(R.id.cbTaskCompleted)
+        val toggleStatus: ToggleButton = itemView.findViewById(R.id.toggleTaskStatus)
         val editButton: Button = itemView.findViewById(R.id.btnEditTask)
         val assignButton: Button = itemView.findViewById(R.id.btnAssignMember)
     }
@@ -34,66 +33,70 @@ class TaskAdapter(
         val task = tasks[position]
         holder.taskName.text = task.name
 
-        // Set checkbox without triggering unnecessary changes
-        holder.checkBox.setOnCheckedChangeListener(null)
-        holder.checkBox.isChecked = task.isCompleted
+        // ✅ Check if the logged-in user is the assigned member
+        val isAssignedMember = task.assignedMember == currentUser
 
-        // Admins can assign members
+        // 🎯 **Only Admins Can Edit or Assign Members**
+        holder.editButton.visibility = if (isAdmin) View.VISIBLE else View.GONE
         holder.assignButton.visibility = if (isAdmin) View.VISIBLE else View.GONE
-        holder.assignButton.setOnClickListener { showAssignMemberDialog(position) }
 
-        // Allow only assigned members or admins to update task status
-        val canUpdateTask = isAdmin || task.assignedMember == currentUser
-        holder.checkBox.isEnabled = canUpdateTask
+        // 🎯 **Only Assigned Members Can Change Status**
+        holder.toggleStatus.isEnabled = isAssignedMember
+        holder.toggleStatus.textOn = "Completed"
+        holder.toggleStatus.textOff = "Ongoing"
+        holder.toggleStatus.isChecked = task.status == "Completed"
 
-        holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
-            if (canUpdateTask && task.isCompleted != isChecked) {
-                tasks[position] = task.copy(isCompleted = isChecked)
-                notifyItemChanged(position)
+        holder.toggleStatus.setOnCheckedChangeListener { _, isChecked ->
+            if (isAssignedMember) {
+                updateTaskStatus(position, if (isChecked) "Completed" else "Ongoing")
             }
         }
 
-        // Only admin can edit tasks
-        holder.editButton.visibility = if (isAdmin) View.VISIBLE else View.GONE
-        holder.editButton.setOnClickListener { showEditTaskDialog(position) }
+        // 🎯 **Admin Edits Task**
+        holder.editButton.setOnClickListener {
+            showEditTaskDialog(position)
+        }
 
-        // Open Task Details Page on Click
-        holder.itemView.setOnClickListener {
-            val intent = Intent(context, TaskDetails::class.java).apply {
-                putExtra("TASK_NAME", task.name)
-                putExtra("ASSIGNED_MEMBER", task.assignedMember ?: "Not Assigned")
-                putExtra("TASK_COMPLETED", task.isCompleted)
-            }
-            context.startActivity(intent)
+        // 🎯 **Admin Assigns Members**
+        holder.assignButton.setOnClickListener {
+            showAssignMemberDialog(position)
         }
     }
 
     override fun getItemCount(): Int = tasks.size
 
-    // Update tasks without recreating adapter
+    // ✅ **New Method: Update Task List Dynamically**
     fun updateTasks(newTasks: List<Task>) {
-        tasks.clear()
-        tasks.addAll(newTasks)
-        notifyDataSetChanged()
+        tasks.clear() // Clear the existing task list
+        tasks.addAll(newTasks) // Add the new tasks
+        notifyDataSetChanged() // Refresh RecyclerView
     }
 
-    private fun showEditTaskDialog(position: Int) {
-        val task = tasks[position]
+    // ✅ Update task status
+    private fun updateTaskStatus(position: Int, newStatus: String) {
+        if (tasks[position].status != newStatus) { // Only update if status changed
+            tasks[position] = tasks[position].copy(status = newStatus)
+            notifyItemChanged(position)
+            Toast.makeText(context, "Task updated to $newStatus", Toast.LENGTH_SHORT).show()
+        }
+    }
 
+    // ✅ Show Edit Task Dialog (Only Admins Can Use)
+    private fun showEditTaskDialog(position: Int) {
         val builder = AlertDialog.Builder(context)
         builder.setTitle("Edit Task")
 
         val input = EditText(context)
-        input.setText(task.name)
+        input.setText(tasks[position].name)
         builder.setView(input)
 
         builder.setPositiveButton("Save") { _, _ ->
             val newName = input.text.toString().trim()
-            if (newName.isNotEmpty()) {
-                tasks[position] = task.copy(name = newName)
+            if (newName.isNotEmpty() && newName != tasks[position].name) {
+                tasks[position] = tasks[position].copy(name = newName)
                 notifyItemChanged(position)
             } else {
-                Toast.makeText(context, "Task name cannot be empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Task name cannot be empty or the same", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -101,21 +104,21 @@ class TaskAdapter(
         builder.show()
     }
 
+    // ✅ Show Assign Member Dialog (Only Admins Can Use)
     private fun showAssignMemberDialog(position: Int) {
-        val task = tasks[position]
-
         val builder = AlertDialog.Builder(context)
         builder.setTitle("Assign Member")
 
-        val spinner = Spinner(context).apply {
-            adapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, teamMembers)
-        }
+        val spinner = Spinner(context)
+        val adapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, teamMembers)
+        spinner.adapter = adapter
+
         builder.setView(spinner)
 
         builder.setPositiveButton("Assign") { _, _ ->
             val selectedMember = spinner.selectedItem.toString()
-            if (task.assignedMember != selectedMember) {
-                tasks[position] = task.copy(assignedMember = selectedMember)
+            if (tasks[position].assignedMember != selectedMember) { // Avoid unnecessary updates
+                tasks[position] = tasks[position].copy(assignedMember = selectedMember)
                 notifyItemChanged(position)
                 Toast.makeText(context, "Assigned to $selectedMember", Toast.LENGTH_SHORT).show()
             }

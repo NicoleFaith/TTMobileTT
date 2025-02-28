@@ -15,24 +15,34 @@ import com.example.ttanader.models.Task
 class UserProject : AppCompatActivity() {
 
     private lateinit var adapter: ProjectListAdapter
-    private val projectLists = mutableListOf<ProjectList>() // ✅ Declare Mutable List of ProjectList
+    private val projectLists = mutableListOf<ProjectList>() // ✅ Mutable List of ProjectLists
+    private val currentUser = "user123" // ✅ Mock current user (Replace with actual user ID)
+    private val isAdmin = true // ✅ Mock admin status (Replace with actual check)
+    private val teamMembers = listOf("Alice", "Bob", "Charlie") // ✅ Mock team members
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_project)
 
-        // Set Team Name in Header
+        // ✅ Set Team Name in Header
         val teamName = intent.getStringExtra("TEAM_NAME")
         findViewById<TextView>(R.id.tvTeamTitle).text = teamName ?: "No Team Name"
 
-        // Set up RecyclerView for Project Lists
+        // ✅ Set up RecyclerView for Project Lists
         val recyclerView = findViewById<RecyclerView>(R.id.rvProjectLists)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        adapter = ProjectListAdapter(projectLists) { listIndex -> showAddTaskDialog(listIndex) }
+        // ✅ Pass the required parameters to ProjectListAdapter
+        adapter = ProjectListAdapter(
+            lists = projectLists,
+            isAdmin = isAdmin,
+            currentUser = currentUser,
+            teamMembers = teamMembers
+        ) { listIndex -> showAddTaskDialog(listIndex) }
+
         recyclerView.adapter = adapter
 
-        // Handle "Add List" Button Click
+        // ✅ Handle "Add List" Button Click
         findViewById<Button>(R.id.btnAddList).setOnClickListener {
             showAddListDialog()
         }
@@ -50,8 +60,8 @@ class UserProject : AppCompatActivity() {
             val listName = input.text.toString().trim()
             if (listName.isNotEmpty()) {
                 val newList = ProjectList(listName, mutableListOf()) // ✅ Create a New Project List
-                projectLists.add(newList)  // ✅ Add it to the List
-                adapter.notifyDataSetChanged() // ✅ Refresh RecyclerView
+                projectLists.add(newList)  // ✅ Add to the list
+                adapter.notifyItemInserted(projectLists.size - 1) // ✅ Update UI properly
             } else {
                 Toast.makeText(this, "Project name cannot be empty", Toast.LENGTH_SHORT).show()
             }
@@ -72,8 +82,13 @@ class UserProject : AppCompatActivity() {
         builder.setPositiveButton("Add") { _, _ ->
             val taskName = input.text.toString().trim()
             if (taskName.isNotEmpty()) {
-                projectLists[listIndex].tasks.add(Task(taskName))  // ✅ Add task to selected list
-                adapter.notifyItemChanged(listIndex)  // ✅ Update UI
+                // ✅ Ensure index is valid before accessing
+                if (listIndex in projectLists.indices) {
+                    projectLists[listIndex].tasks.add(Task(taskName)) // ✅ Add task
+                    adapter.notifyItemChanged(listIndex) // ✅ Update UI properly
+                } else {
+                    Toast.makeText(this, "Invalid list selected", Toast.LENGTH_SHORT).show()
+                }
             } else {
                 Toast.makeText(this, "Task name cannot be empty", Toast.LENGTH_SHORT).show()
             }

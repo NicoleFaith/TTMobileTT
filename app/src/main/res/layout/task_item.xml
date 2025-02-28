@@ -10,53 +10,37 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="12dp"
-        android:background="@color/white"
-        android:gravity="center_vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <!-- Checkbox for marking task completion -->
-        <CheckBox
-            android:id="@+id/cbTaskCompleted"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <!-- Task Name -->
         <TextView
             android:id="@+id/tvTaskName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Task Name"
-            android:textSize="16sp"
-            android:paddingStart="8dp"
-            android:textColor="@color/black"
-            android:maxLines="1"
-            android:ellipsize="end"/>
-
-        <!-- Assign Member Button -->
-        <Button
-            android:id="@+id/btnAssignMember"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Assign"
-            android:textColor="@color/white"
-            android:background="@color/purple"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="6dp"
-            android:textSize="14sp"
-            android:visibility="gone"/> <!-- Hidden for non-admins -->
+            android:text="Task Name"
+            android:textSize="18sp" />
 
-        <!-- Edit Button -->
+        <ToggleButton
+            android:id="@+id/toggleTaskStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Toggle Task"
+            android:textOn="Completed"
+            android:textOff="Ongoing" />
+
         <Button
             android:id="@+id/btnEditTask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Edit"
-            android:textColor="@color/white"
-            android:background="@color/teal_700"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="6dp"
-            android:textSize="14sp"/>
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnAssignMember"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assign"
+            android:visibility="gone" />
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>
