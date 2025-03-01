@@ -7,4 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".TeamManagementActivity">
 
+    <Button
+        android:id="@+id/btnManageMembers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Manage Members"
+        android:textAllCaps="false"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/white"
+        android:layout_margin="16dp"
+        tools:ignore="MissingConstraints" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

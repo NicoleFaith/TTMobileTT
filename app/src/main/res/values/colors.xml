@@ -20,5 +20,8 @@
     <color name="chip_default">#FFEEEEEE</color>   <!-- Light gray for default -->
 
 
+    <color name="red">#FF2C2C</color>
+
+
 
 </resources>

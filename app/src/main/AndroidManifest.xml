@@ -13,6 +13,12 @@
         android:theme="@style/Theme.TTAnader"
         tools:targetApi="31">
         <activity
+            android:name=".MemberAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".ManageMembersActivity"
+            android:exported="false" />
+        <activity
             android:name=".TeamManagementActivity"
             android:exported="false" />
         <activity
