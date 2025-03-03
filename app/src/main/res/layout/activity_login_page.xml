@@ -3,143 +3,165 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LogSign.LoginPage"
-    android:background="@color/black">
+    android:background="@color/background"
+    tools:context=".LogSign.LoginPage">
 
-    <!-- Centered Layout -->
+    <!-- Centered Form Card -->
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
         android:orientation="vertical"
+        android:padding="24dp"
+        android:background="@color/surface"
+        android:elevation="8dp"
+        android:clipToOutline="true"
+        android:backgroundTint="@color/surface"
+        android:shape="rectangle"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <!-- Logo -->
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:src="@drawable/logo12"
+            android:contentDescription="App Logo"
+            app:tint="@color/primaryBlue" />
 
-        <!-- Container Box -->
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Welcome Back"
+            android:textColor="@color/textPrimary"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:fontFamily="@font/poppins_medium" />
+
+        <!-- Email Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:boxBackgroundMode="filled"
+            app:boxBackgroundColor="@color/inputBackground"
+            app:boxStrokeColor="@color/primaryBlue"
+            app:hintTextColor="@color/darkGray"
+            app:cornerRadius="12dp"
+            app:hintEnabled="false">  <!-- Use app:hintEnabled instead of android:hintEnabled -->
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailFillUpLog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:drawableStart="@drawable/baseline_email_24"
+                android:drawableTint="@color/darkGray"
+                android:drawablePadding="12dp"
+                android:textColor="@color/textPrimary"
+                android:textColorHint="@color/darkGray"
+                android:padding="12dp"
+                android:background="@null"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Password Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:boxBackgroundMode="filled"
+            app:boxBackgroundColor="@color/inputBackground"
+            app:boxStrokeColor="@color/primaryBlue"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/primaryBlue"
+            app:hintTextColor="@color/darkGray"
+            app:cornerRadius="12dp"
+            app:hintEnabled="false">  <!-- Use app:hintEnabled instead of android:hintEnabled -->
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordFillUpLog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:drawableStart="@drawable/baseline_lock_24"
+                android:drawableTint="@color/darkGray"
+                android:drawablePadding="12dp"
+                android:textColor="@color/textPrimary"
+                android:textColorHint="@color/darkGray"
+                android:inputType="textPassword"
+                android:padding="12dp"
+                android:background="@null"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+        <!-- Forgot Password -->
+        <TextView
+            android:id="@+id/ForgotPassBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="Forgot Password?"
+            android:textColor="@color/primaryBlue"
+            android:textSize="14sp"
+            android:paddingTop="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/poppins_medium"/>
+
+        <!-- Login Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/SelLogBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/primaryBlue"
+            android:text="Login"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="10dp"
+            android:fontFamily="@font/poppins_bold"/>
+
+        <!-- Sign-Up Section -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/boxcontainers"
-            android:padding="12dp"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="12dp">
 
-            <!-- Login Title -->
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login"
-                android:textColor="@color/black"
-                android:textSize="37sp"
-                android:fontFamily="@font/interblack"
-                android:gravity="center"
-                android:layout_marginBottom="10dp"/>
+                android:text="Don't have an account?"
+                android:textColor="@color/darkGray"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins_medium"/>
 
-            <!-- Email Input -->
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColorHint="@color/gray"
-                app:boxBackgroundMode="outline"
-                android:background="@color/white"
-                app:boxStrokeColor="@color/white"
-                android:hint="Enter Email">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/emailFillUpSign"
-                    android:background="@color/white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray"
-                    android:textSize="16sp"
-                    android:drawableTint="@color/black"
-                    android:drawableEnd="@drawable/baseline_email_24"
-                    android:drawablePadding="10dp"
-                    android:padding="12dp"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Password Input -->
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:textColorHint="@color/gray"
-                app:boxBackgroundMode="outline"
-                android:background="@color/white"
-                app:boxStrokeColor="@color/white"
-                android:hint="Enter Password">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/passwordFillUpSign"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray"
-                    android:drawableTint="@color/black"
-                    android:textSize="16sp"
-                    android:background="@color/white"
-                    android:drawableEnd="@drawable/baseline_lock_24"
-                    android:drawablePadding="10dp"
-                    android:padding="12dp"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Login Button -->
+            <!-- Sign Up Button -->
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/SelLogBtn"
-                android:layout_width="260dp"
-                android:layout_height="50dp"
-                android:text="Login"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:backgroundTint="@color/black"
-                app:cornerRadius="50dp"
-                android:layout_marginTop="25dp"/>
-
-            <!-- Forgot Password Button -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/ForgotPassBtn"
+                android:id="@+id/signUpLogPgBtn"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Forgot the Password?"
-                android:textColor="@color/black"
+                android:text="Sign Up"
                 android:textAllCaps="false"
-                android:layout_marginTop="10dp"/>
-
-            <!-- Sign Up Section -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:textColor="@color/primaryBlue"
+                android:textStyle="bold"
                 android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Don't have an account?"
-                    android:textColor="@color/gray"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/signUpLogPgBtn"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sign Up"
-                    android:textAllCaps="true"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:layout_marginStart="4dp"/>
-            </LinearLayout>
-
+                android:paddingStart="4dp"
+                android:fontFamily="@font/poppins_bold"/>
         </LinearLayout>
 
     </LinearLayout>

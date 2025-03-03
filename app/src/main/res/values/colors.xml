@@ -1,27 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="gray">#808080</color>
 
-    <color name="todo_bg">#FFFFFF</color>  <!-- White -->
-    <color name="todo_stroke">#B0B0B0</color>  <!-- Gray -->
-    <color name="todo_text">#000000</color>  <!-- Black -->
+    <color name="todo_bg">#FFFFFF</color>
+    <color name="todo_stroke">#B0B0B0</color>
+    <color name="todo_text">#000000</color>
 
-    <color name="in_progress_bg">#D3D3D3</color>  <!-- Light Gray -->
-    <color name="in_progress_stroke">#808080</color>  <!-- Medium Gray -->
-    <color name="in_progress_text">#000000</color>  <!-- Black -->
+    <color name="in_progress_bg">#D3D3D3</color>
+    <color name="in_progress_stroke">#808080</color>
+    <color name="in_progress_text">#000000</color>
 
-    <color name="completed_bg">#000000</color>  <!-- Black -->
-    <color name="completed_stroke">#FFFFFF</color>  <!-- White -->
-    <color name="completed_text">#FFFFFF</color>  <!-- White -->
+    <color name="completed_bg">#000000</color>
+    <color name="completed_stroke">#FFFFFF</color>
+    <color name="completed_text">#FFFFFF</color>
 
-    <color name="chip_unselected">#E0E0E0</color> <!-- Light gray when unselected -->
-    <color name="chip_default">#FFEEEEEE</color>   <!-- Light gray for default -->
-
+    <color name="chip_unselected">#E0E0E0</color>
+    <color name="chip_default">#FFEEEEEE</color>
 
     <color name="red">#FF2C2C</color>
 
+    <color name="gray">#A0A0A0</color>
+
+
+    <color name="dark_gray">#1E1E1E</color>
+    <color name="light_gray">#B0B0B0</color>
+    <color name="blue">#3498DB</color>
+    <color name="blue_dark">#21618C</color>
+
+    <color name="black_bg">#121212</color>
+    <color name="blue_highlight">#2979FF</color>
+
+
+        <color name="black_primary">#121212</color>
+        <color name="black_secondary">#1E1E1E</color>
+        <color name="blue_primary">#0084FF</color>
+        <color name="blue_secondary">#00A3FF</color>
+        <color name="gray_text">#B0B0B0</color>
+        <color name="white_text">#FFFFFF</color>
+
+        <color name="blackPrimary">#000000</color>
+        <color name="blueAccent">#3F3F7F</color>
+        <color name="darkIndigo">#1E1D63</color>
+        <color name="midnightBlue">#1E1D64</color>
+        <color name="royalBlue">#21206E</color>
+        <color name="buttonBackground">#1E1D63</color>
+        <color name="buttonText">#FFFFFF</color>
+
+
+    <color name="black">#121212</color>
+    <color name="white">#FFFFFF</color>
+    <color name="blueHighlight">#008CFF</color>
+    <color name="bluePressed">#005F99</color>
+    <color name="errorRed">#FF3B30</color>
+    <color name="successGreen">#4CAF50</color>
+
+
+
+    <color name="primaryBlueDark">#0084FF</color> <!-- Blue Highlight -->
+    <color name="backgroundDark">#121212</color> <!-- Dark Background -->
+    <color name="surfaceDark">#1E1E1E</color> <!-- Dark Card -->
+    <color name="inputBackgroundDark">#2A2A2A</color> <!-- Darker Input Background -->
+    <color name="textPrimaryDark">#FFFFFF</color> <!-- White Text -->
+    <color name="grayGray">#A0A0A0</color> <!-- Gray Text -->
+
+    <color name="primaryBlue">#007AFF</color> <!-- Blue Highlight -->
+    <color name="background">#F5F5F5</color> <!-- Light Background -->
+    <color name="surface">#FFFFFF</color> <!-- White Card -->
+    <color name="inputBackground">#E0E0E0</color> <!-- Light Input Background -->
+    <color name="textPrimary">#121212</color> <!-- Black Text -->
+    <color name="darkGray">#616161</color> <!-- Dark Gray Text -->
 
 
 </resources>

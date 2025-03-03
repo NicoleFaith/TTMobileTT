@@ -27,7 +27,7 @@ android {
         }
     }
 
-    // Enable View Binding
+    // ✅ Enable View Binding
     viewBinding {
         enable = true
     }
@@ -48,8 +48,14 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
 
-    // ✅ Updated Material Components for ChipGroup & UI Elements
+    // Ensures `TextInputLayout` works
     implementation("com.google.android.material:material:1.11.0")
+
+    // RecyclerView (if needed for lists)
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+
+    // CardView for UI aesthetics
+    implementation("androidx.cardview:cardview:1.0.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
