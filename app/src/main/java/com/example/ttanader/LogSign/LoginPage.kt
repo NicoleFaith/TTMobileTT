@@ -14,14 +14,15 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.button.MaterialButton
 import android.widget.TextView
+import android.widget.Toast
 
 class LoginPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.hide() // Hide the action bar for a fullscreen experience
+        supportActionBar?.hide() // Hides the action bar
         setContentView(R.layout.activity_login_page)
 
-        // Initialize UI components
+        // for input input
         val emailInput = findViewById<TextInputEditText>(R.id.emailFillUpLog)
         val passwordInput = findViewById<TextInputEditText>(R.id.passwordFillUpLog)
         val passwordInputLayout = findViewById<TextInputLayout>(R.id.passwordInputLayout)
@@ -29,68 +30,117 @@ class LoginPage : AppCompatActivity() {
         val signUpButton = findViewById<TextView>(R.id.signUpLogPgBtn)
         val forgotPasswordButton = findViewById<TextView>(R.id.ForgotPassBtn)
 
-        // Initially hide the password toggle icon
+        // hides the password toggle icon pero appear din as the user types
         passwordInputLayout.isEndIconVisible = false
 
-        // Apply dynamic icon tint effect for email and password fields
+        // for tint everytime mag input si user inside the box
         applyIconTintEffect(emailInput, R.drawable.baseline_email_24)
         applyIconTintEffect(passwordInput, R.drawable.baseline_lock_24)
 
-        // Show password toggle icon only when the user starts typing
+        // Restrict special characters in email field and show warning
+        restrictSpecialCharacters(emailInput, "Email")
+
+        // Show password toggle icon only when user types
         passwordInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Show password toggle icon only when the password field is not empty
                 passwordInputLayout.isEndIconVisible = !s.isNullOrEmpty()
             }
 
             override fun afterTextChanged(s: Editable?) {}
         })
 
-        // Login button - Redirects user to MainActivity
+        // Login button - Validate input and redirect to MainActivity if valid
         loginButton.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            val email = emailInput.text.toString().trim()
+            val password = passwordInput.text.toString().trim()
+
+            if (validateInputs(email, password)) {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }
         }
 
-        // Sign-Up button - Redirects user to SignUpPage
+        // Sign-Up button - Redirects to SignUpPage
         signUpButton.setOnClickListener {
             startActivity(Intent(this, SignUpPage::class.java))
         }
 
-        // Forgot Password button - Redirects user to ForgotPassword Page
+        // Forgot Password button - Redirects to ForgotPassword Page
         forgotPasswordButton.setOnClickListener {
             startActivity(Intent(this, ForgotPassword::class.java))
         }
     }
 
     /**
-     * Function to dynamically update the tint of the left icon in the input field.
-     * The icon changes color based on whether the field is empty or has text.
-     *
-     * @param editText The TextInputEditText field where the icon should be updated.
-     * @param drawableRes The resource ID of the drawable icon to be used.
+     * Restrict special characters in the given input field while allowing only valid characters.
+     */
+    private fun restrictSpecialCharacters(editText: TextInputEditText, fieldName: String) {
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val regex = "[^a-zA-Z0-9@._-]".toRegex() // Allowed characters for email
+                if (s != null && regex.containsMatchIn(s)) {
+                    showToast("$fieldName contains invalid characters!")
+                    editText.setText(s.replace(regex, "")) // Remove invalid characters
+                    editText.setSelection(editText.text?.length ?: 0) // Keep cursor at end
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+    }
+
+    /**
+     * Validate user inputs before allowing login.
+     */
+    private fun validateInputs(email: String, password: String): Boolean {
+        if (email.isEmpty()) {
+            showToast("Email is required")
+            return false
+        }
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            showToast("Enter a valid email address")
+            return false
+        }
+        if (password.isEmpty()) {
+            showToast("Password is required")
+            return false
+        }
+        if (password.length < 6) {
+            showToast("Password must be at least 6 characters")
+            return false
+        }
+        return true
+    }
+
+    /**
+     * Display a short Toast message.
+     */
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    /**
+     * Apply icon tint effect dynamically to EditText fields.
      */
     private fun applyIconTintEffect(editText: TextInputEditText, drawableRes: Int) {
-        // Define default (inactive) and active colors
         val defaultColor = ContextCompat.getColor(this, R.color.darkGray) // Inactive color
         val activeColor = ContextCompat.getColor(this, R.color.primaryBlue) // Active color
 
-        // Get the drawable and apply default color
         val drawable = ContextCompat.getDrawable(this, drawableRes)?.mutate()
         drawable?.setColorFilter(defaultColor, PorterDuff.Mode.SRC_IN)
 
-        // Preserve the right (end) icon by only modifying the left (start) icon
         editText.setCompoundDrawablesWithIntrinsicBounds(drawable, null, editText.compoundDrawables[2], null)
 
-        // Add text change listener to update the icon color dynamically
         editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 drawable?.setColorFilter(
                     if (s.isNullOrEmpty()) defaultColor else activeColor,
                     PorterDuff.Mode.SRC_IN
                 )
-                // Ensure only the start icon is updated, keeping the end icon intact
                 editText.setCompoundDrawablesWithIntrinsicBounds(drawable, null, editText.compoundDrawables[2], null)
             }
 
