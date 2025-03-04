@@ -15,7 +15,7 @@ class WelcomePage : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_welcome_page)
 
-        val BeginBtn = findViewById<Button>(R.id.BeginBtn)
+        val BeginBtn = findViewById<Button>(R.id.getStartedButton)
 
         BeginBtn.setOnClickListener {
             val intent = Intent(this, MainActivity ::class.java)

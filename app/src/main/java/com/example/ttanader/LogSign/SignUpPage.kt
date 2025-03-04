@@ -2,9 +2,11 @@ package com.example.ttanader.LogSign
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.ttanader.R
@@ -15,13 +17,17 @@ import android.graphics.PorterDuff
 import android.widget.TextView
 
 class SignUpPage : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId") // Suppresses missing ID warning (ensure IDs exist in XML)
+
+    private lateinit var sharedPreferences: SharedPreferences
+
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Hide Action Bar for a modern UI
         supportActionBar?.hide()
         setContentView(R.layout.activity_sign_up_page)
+
+        // SharedPreferences for storing user data
+        sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
 
         // Initialize UI Components
         val firstNameInput = findViewById<TextInputEditText>(R.id.FirstNameFillUpSign)
@@ -41,57 +47,112 @@ class SignUpPage : AppCompatActivity() {
         applyIconTintEffect(emailInput, R.drawable.baseline_email_24)
         applyIconTintEffect(passwordInput, R.drawable.baseline_lock_24)
 
-        // Show password toggle icon only when the user starts typing
+        // Show password toggle icon only when user starts typing
         passwordInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Ensure the password toggle icon is always visible when there's text
                 passwordInputLayout.isEndIconVisible = !s.isNullOrEmpty()
             }
 
             override fun afterTextChanged(s: Editable?) {}
         })
 
-        // Sign-Up Button - Redirect to LoginPage (You can add logic to store user data)
+        // Sign-Up Button Click Listener
         signUpButton.setOnClickListener {
-            val intent = Intent(this, LoginPage::class.java)
-            startActivity(intent)
+            val firstName = firstNameInput.text.toString().trim()
+            val lastName = lastNameInput.text.toString().trim()
+            val email = emailInput.text.toString().trim()
+            val password = passwordInput.text.toString().trim()
+
+            if (validateInputs(firstName, lastName, email, password)) {
+                // Save user email in SharedPreferences
+                sharedPreferences.edit().putString("UserEmail", email).apply()
+
+                Toast.makeText(this, "Sign-up successful!", Toast.LENGTH_SHORT).show()
+
+                navigateToWelcomePage() // Redirect to Welcome Page instead of Login
+            }
         }
 
-        // Already have an account? Login Button - Redirect to LoginPage
+        // Redirect to Login Page
         loginRedirect.setOnClickListener {
-            val intent = Intent(this, LoginPage::class.java)
-            startActivity(intent)
+            navigateToLogin()
         }
     }
 
     /**
-     * Function to apply dynamic icon tint effect based on input state.
-     *
-     * @param editText The TextInputEditText field where the icon should be updated.
-     * @param drawableRes The resource ID of the drawable icon.
+     * Validate form fields before proceeding with signup.
+     */
+    private fun validateInputs(firstName: String, lastName: String, email: String, password: String): Boolean {
+        if (firstName.isEmpty()) {
+            showToast("First Name is required")
+            return false
+        }
+        if (lastName.isEmpty()) {
+            showToast("Last Name is required")
+            return false
+        }
+        if (email.isEmpty()) {
+            showToast("Email is required")
+            return false
+        }
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            showToast("Enter a valid email address")
+            return false
+        }
+        if (password.isEmpty()) {
+            showToast("Password is required")
+            return false
+        }
+        if (password.length < 6) {
+            showToast("Password must be at least 6 characters")
+            return false
+        }
+        return true
+    }
+
+    /**
+     * Display a short Toast message.
+     */
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    /**
+     * Navigate to Welcome Page after signing up.
+     */
+    private fun navigateToWelcomePage() {
+        startActivity(Intent(this, WelcomePage::class.java))
+        finish() // Prevent user from going back to Sign-Up Page
+    }
+
+    /**
+     * Navigate to Login Page if user already has an account.
+     */
+    private fun navigateToLogin() {
+        startActivity(Intent(this, LoginPage::class.java))
+        finish()
+    }
+
+    /**
+     * Apply dynamic icon tint effect for text fields.
      */
     private fun applyIconTintEffect(editText: TextInputEditText, drawableRes: Int) {
-        // Define default (inactive) and active colors
         val defaultColor = ContextCompat.getColor(this, R.color.darkGray) // Inactive color
         val activeColor = ContextCompat.getColor(this, R.color.primaryBlue) // Active color
 
-        // Get the drawable and apply default color
         val drawable = ContextCompat.getDrawable(this, drawableRes)?.mutate()
         drawable?.setColorFilter(defaultColor, PorterDuff.Mode.SRC_IN)
 
-        // Preserve end icon by modifying only the start icon
         editText.setCompoundDrawablesWithIntrinsicBounds(drawable, null, editText.compoundDrawables[2], null)
 
-        // Add text change listener to update the icon color dynamically
         editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 drawable?.setColorFilter(
                     if (s.isNullOrEmpty()) defaultColor else activeColor,
                     PorterDuff.Mode.SRC_IN
                 )
-                // Ensure only the start icon is updated, keeping the end icon intact
                 editText.setCompoundDrawablesWithIntrinsicBounds(drawable, null, editText.compoundDrawables[2], null)
             }
 
