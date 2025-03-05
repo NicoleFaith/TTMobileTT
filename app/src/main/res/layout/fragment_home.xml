@@ -1,49 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:fitsSystemWindows="true"
-    tools:context=".HomeFragment">
+    android:background="@color/background"
+    android:fitsSystemWindows="true">
 
-    <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface"
+        android:elevation="4dp">
 
-    <LinearLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/surface"
+            app:title="Projects"
+            app:titleTextColor="@color/textPrimary"
+            app:navigationIcon="@drawable/baseline_menu_book_24">
+
+            <ImageView
+                android:id="@+id/profile_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="end"
+                android:padding="8dp"
+                android:src="@drawable/baseline_person_24"
+                android:scaleType="centerCrop"
+                android:background="@color/inputBackground"
+                android:clipToOutline="true"
+                android:layout_marginEnd="16dp"/>
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:padding="16dp"
+        android:clipToPadding="false">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="15dp"
-            android:textColor="@color/black"
-            android:text="No projects yet. Create one to get started!"/>
+            android:orientation="vertical">
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                android:background="@color/surface">
 
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:background="@color/surface"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Project Name"
+                        android:textSize="18sp"
+                        android:textColor="@color/textPrimary"
+                        android:textStyle="bold"/>
 
-    <com.google.android.material.button.MaterialButton
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Project Description goes here..."
+                        android:textSize="14sp"
+                        android:textColor="@color/darkGray"
+                        android:paddingTop="4dp"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/emptyText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No projects yet. Create one to get started!"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/darkGray"
+                android:gravity="center"
+                android:visibility="gone"
+                android:paddingTop="20dp"/>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/CreateWorkspaceBtn"
-        android:layout_width="500dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+ Create Team"
-        android:textColor="@color/white"
-        android:padding="10dp"
-        android:gravity="center"
-        android:layout_marginTop="600dp"
-        android:layout_marginLeft="200dp"
-        android:drawableStart="@drawable/baseline_add_24"
-        android:backgroundTint="@color/black"
-        />
+        android:layout_margin="16dp"
+        android:layout_gravity="bottom|end"
+        android:backgroundTint="@color/primaryBlue"
+        android:src="@drawable/baseline_add_24"
+        app:maxImageSize="24dp"/>
 
-
-
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

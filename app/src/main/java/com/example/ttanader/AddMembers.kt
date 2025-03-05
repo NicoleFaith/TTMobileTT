@@ -21,39 +21,25 @@ class AddMembers : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityAddMembersBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Retrieve existing emails (if any)
-        val existingEmails = intent.getStringArrayListExtra("EXISTING_EMAILS") ?: ArrayList()
-        emailList.addAll(existingEmails)
+        // Retrieve existing emails from intent
+        emailList.addAll(intent.getStringArrayListExtra("EXISTING_EMAILS") ?: emptyList())
 
-        // Initialize RecyclerView with Adapter
+        // Setup RecyclerView
         emailAdapter = EmailAdapter(emailList) { updateConfirmButtonVisibility() }
-        binding.rvEmails.layoutManager = LinearLayoutManager(this)
-        binding.rvEmails.adapter = emailAdapter
-
-        // Initially hide the Confirm button if no members
-        updateConfirmButtonVisibility()
-
-        // Add new email
-        binding.btnAddEmail.setOnClickListener {
-            val email = binding.EnterEmailMember.text.toString().trim()
-            if (email.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                if (!emailList.contains(email)) {
-                    emailAdapter.addEmail(email)
-                    binding.EnterEmailMember.text?.clear()
-                    updateConfirmButtonVisibility() // Check visibility after adding
-                } else {
-                    binding.EnterEmailMember.error = "Email already added"
-                }
-            } else {
-                binding.EnterEmailMember.error = "Enter a valid email"
-            }
+        binding.rvEmails.apply {
+            layoutManager = LinearLayoutManager(this@AddMembers)
+            adapter = emailAdapter
         }
 
-        // Confirm and return the email list
+        updateConfirmButtonVisibility() // Hide confirm button if empty
+
+        // Add Email Button Click Listener
+        binding.btnAddEmail.setOnClickListener { addEmail() }
+
+        // Confirm Members Button Click Listener
         binding.btnConfirmEmails.setOnClickListener {
             val resultIntent = Intent().apply {
                 putStringArrayListExtra("CONFIRMED_EMAILS", ArrayList(emailList))
@@ -63,13 +49,29 @@ class AddMembers : AppCompatActivity() {
         }
     }
 
-    // Function to show/hide confirm button based on email list size
+    private fun addEmail() {
+        val email = binding.EnterEmailMember.text.toString().trim()
+
+        when {
+            email.isEmpty() -> binding.EnterEmailMember.error = "Enter an email"
+            !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() ->
+                binding.EnterEmailMember.error = "Enter a valid email"
+            emailList.contains(email) ->
+                binding.EnterEmailMember.error = "Email already added"
+            else -> {
+                emailAdapter.addEmail(email)
+                binding.EnterEmailMember.text?.clear()
+                updateConfirmButtonVisibility()
+            }
+        }
+    }
+
     private fun updateConfirmButtonVisibility() {
         binding.btnConfirmEmails.visibility = if (emailList.isNotEmpty()) View.VISIBLE else View.GONE
     }
 }
 
-// Email Adapter with Remove Function
+// Adapter for Email List
 class EmailAdapter(
     private val emailList: MutableList<String>,
     private val onListChanged: () -> Unit // Callback to update button visibility
@@ -80,10 +82,11 @@ class EmailAdapter(
 
         fun bind(email: String, onRemove: (Int) -> Unit) {
             binding.tvEmail.text = email
-
-            // Remove email
             binding.btnRemove.setOnClickListener {
-                showDeleteConfirmationDialog(binding.root.context, adapterPosition, onRemove)
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    showDeleteConfirmationDialog(binding.root.context, position, onRemove)
+                }
             }
         }
 
@@ -115,12 +118,14 @@ class EmailAdapter(
     fun addEmail(email: String) {
         emailList.add(email)
         notifyItemInserted(emailList.size - 1)
-        onListChanged() // Notify activity that list has changed
+        onListChanged()
     }
 
     private fun removeEmail(position: Int) {
-        emailList.removeAt(position)
-        notifyItemRemoved(position)
-        onListChanged() // Notify activity that list has changed
+        if (position in emailList.indices) { // Prevent crash if position is invalid
+            emailList.removeAt(position)
+            notifyItemRemoved(position)
+            onListChanged()
+        }
     }
 }

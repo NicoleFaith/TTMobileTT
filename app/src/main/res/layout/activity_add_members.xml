@@ -1,116 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/background"
+    android:fillViewport="true"
     tools:context=".AddMembers">
 
-    <!-- Scrollable Content -->
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fillViewport="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="26dp"
+        android:paddingBottom="40dp"
+        android:gravity="center_horizontal">
 
-        <LinearLayout
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Members"
+            android:textColor="@color/primaryBlue"
+            android:textSize="24sp"
+            android:fontFamily="@font/interbold"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:paddingBottom="14dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <!-- Email Input Section -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="20dp"
-            android:background="@color/white">
+            android:hint="Enter Email Address"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/primaryBlue"
+            android:textColorHint="@color/darkGray"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            android:layout_marginBottom="10dp">
 
-            <!-- Title -->
-            <TextView
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/EnterEmailMember"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Add Members"
-                android:textColor="@color/black"
-                android:fontFamily="@font/interblack"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:paddingBottom="16dp"/>
+                android:textColor="@color/textPrimary"
+                android:textSize="16sp"
+                android:background="@android:color/transparent"
+                android:padding="12dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Email Input Field -->
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        <!-- Add Member Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Member"
+            android:textColor="@color/surface"
+            android:backgroundTint="@color/primaryBlue"
+            app:cornerRadius="12dp"
+            android:layout_marginTop="10dp"
+            android:elevation="2dp"/>
+
+        <!-- Added Members Section -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="2dp"
+            android:backgroundTint="@color/surface">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Email"
-                app:hintTextColor="@color/gray"
-                app:boxBackgroundMode="outline"
-                app:boxStrokeColor="@color/black"
-                app:boxStrokeWidth="2dp"
-                app:boxStrokeWidthFocused="3dp"
-                app:boxCornerRadiusTopStart="16dp"
-                app:boxCornerRadiusTopEnd="16dp"
-                app:boxCornerRadiusBottomStart="16dp"
-                app:boxCornerRadiusBottomEnd="16dp"
-                android:layout_marginBottom="12dp">
+                android:padding="14dp"
+                android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/EnterEmailMember"
-                    android:layout_width="match_parent"
+                <!-- Section Title -->
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:padding="14dp"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:text="Added Members"
+                    android:textColor="@color/primaryBlue"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:paddingBottom="8dp"/>
 
-
-
-
-
-            <!-- Add Email Button -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnAddEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Add Member"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:backgroundTint="@color/black"
-                android:elevation="4dp"
-                app:cornerRadius="13dp"
-                android:layout_marginBottom="16dp"/>
-
-            <!-- RecyclerView Container -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp"
-                android:background="@color/white"
-                android:layout_marginBottom="16dp">
-
+                <!-- List of Members -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvEmails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:nestedScrollingEnabled="false"/>
-            </androidx.cardview.widget.CardView>
+                    android:background="@color/inputBackground"
+                    android:elevation="1dp"
+                    android:minHeight="120dp"
+                    android:nestedScrollingEnabled="false"
+                    android:padding="10dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-            <!-- Confirm Members Button -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnConfirmEmails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Confirm Members"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:backgroundTint="@color/black"
-                android:elevation="4dp"
-                app:cornerRadius="13dp"
-                android:layout_marginBottom="16dp"/>
-        </LinearLayout>
-    </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Confirm Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnConfirmEmails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirm Members"
+            android:textColor="@color/surface"
+            android:backgroundTint="@color/primaryBlue"
+            app:cornerRadius="12dp"
+            android:elevation="3dp"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"/>
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

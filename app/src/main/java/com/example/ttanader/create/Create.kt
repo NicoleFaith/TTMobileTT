@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ttanader.AddMembers
 import com.example.ttanader.ConfirmedEmailsAdapter
-import com.example.ttanader.UserProject// Change UserProject to TeamDashboard
+import com.example.ttanader.UserProject // Change UserProject to TeamDashboard
 import com.example.ttanader.databinding.ActivityCreateBinding
 
 class Create : AppCompatActivity() {
@@ -30,17 +30,9 @@ class Create : AppCompatActivity() {
         binding.rvConfirmedEmails.layoutManager = LinearLayoutManager(this)
         binding.rvConfirmedEmails.adapter = confirmedEmailsAdapter
 
-        // Initially hide the "Edit Members" button (will be shown when members are added)
-        binding.btnEditMembers.visibility = View.GONE
-
         // Open AddMembers activity when clicking "Add Members" button
         binding.NewProjectAddMembersBtn.setOnClickListener {
-            openEditMembersScreen()
-        }
-
-        // Open AddMembers activity for editing members
-        binding.btnEditMembers.setOnClickListener {
-            openEditMembersScreen()
+            openAddMembersScreen()
         }
 
         // Confirm Team button (Navigates to TeamDashboard)
@@ -50,7 +42,7 @@ class Create : AppCompatActivity() {
     }
 
     // Opens the AddMembers activity and passes the current list of confirmed emails
-    private fun openEditMembersScreen() {
+    private fun openAddMembersScreen() {
         val intent = Intent(this, AddMembers::class.java)
         intent.putStringArrayListExtra("EXISTING_EMAILS", ArrayList(confirmedEmails)) // Pass current emails
         startActivityForResult(intent, REQUEST_CODE_ADD_MEMBERS) // Start AddMembers activity
@@ -66,9 +58,6 @@ class Create : AppCompatActivity() {
                 confirmedEmails.clear() // Clear existing list
                 confirmedEmails.addAll(it) // Add new confirmed emails
                 confirmedEmailsAdapter.notifyDataSetChanged() // Notify adapter to refresh UI
-
-                // Show "Edit Members" button only if there are confirmed members
-                binding.btnEditMembers.visibility = if (confirmedEmails.isNotEmpty()) View.VISIBLE else View.GONE
             }
         }
     }

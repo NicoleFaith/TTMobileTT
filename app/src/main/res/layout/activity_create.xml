@@ -3,151 +3,123 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/background"
     tools:context=".create.Create">
 
-    <!-- Scrollable Layout -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:padding="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:padding="24dp">
+            android:gravity="center_horizontal">
 
             <!-- Title -->
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Create a New Team"
-                android:textColor="@color/black"
-                android:fontFamily="@font/interblack"
-                android:textSize="28sp"
-                android:gravity="center"
+                android:textColor="@color/primaryBlue"
+                android:textSize="24sp"
+                android:fontFamily="@font/interbold"
                 android:textStyle="bold"
-                android:paddingBottom="16dp"/>
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:paddingBottom="18dp"/>
 
-            <!-- CardView for Input Fields -->
+            <!-- Team Name Input -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Team Name"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/primaryBlue"
+                android:textColorHint="@color/darkGray"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                android:layout_marginBottom="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/teamNameCreated"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="16sp"
+                    android:background="@android:color/transparent"
+                    android:padding="12dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <!-- Team Members Section -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="3dp"
-                app:cardElevation="6dp"
-                android:background="@android:color/white"
-                android:padding="16dp">
+                android:layout_marginTop="12dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="2dp"
+                android:backgroundTint="@color/surface">
 
                 <LinearLayout
-                    android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="16dp"
                     android:orientation="vertical">
 
-                    <!-- Team Name Input -->
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                        app:boxBackgroundMode="outline"
-                        app:boxStrokeColor="@color/black"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:background="@color/white"
-                        android:hint="Enter Team Name"
-                        android:textColorHint="@color/gray">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/teamNameCreated"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/white"
-                            android:textColor="@color/black" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <!-- Add Members Button -->
-                    <LinearLayout
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:background="@color/white"
-                        android:gravity="center_vertical">
+                        android:text="Team Members"
+                        android:textColor="@color/primaryBlue"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:paddingBottom="8dp"/>
 
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/NewProjectAddMembersBtn"
-                            android:background="@color/white"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="+ Add Members"
-                            android:textColor="@color/black"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvConfirmedEmails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="120dp"
+                        android:nestedScrollingEnabled="false"
+                        android:background="@color/inputBackground"
+                        android:padding="10dp"
+                        android:elevation="2dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-                    </LinearLayout>
+                    <!-- Add Members Button -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/NewProjectAddMembersBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+ Add Members"
+                        android:textColor="@color/primaryBlue"
+                        android:layout_marginTop="12dp"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"/>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
-            <!-- Confirmed Emails List -->
-            <androidx.cardview.widget.CardView
+            <!-- Confirm Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ConfirmTeam"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/white"
-                android:background="@android:color/white"
-                android:layout_marginTop="16dp"
-                android:padding="12dp">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvConfirmedEmails"
-                    android:background="@color/white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="200dp"
-                    android:nestedScrollingEnabled="false"/>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Buttons Section -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:background="@color/white"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_marginTop="20dp">
-
-                <!-- Edit Members Button -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnEditMembers"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Edit Members"
-                    android:textColor="@color/black"
-                    app:cornerRadius="20dp"/>
-
-                <!-- Confirm Team Button -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/ConfirmTeam"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Confirm Team"
-                    android:textColor="@color/white"
-                    android:backgroundTint="@color/black"
-                    app:cornerRadius="20dp"
-                    android:layout_marginTop="10dp"/>
-            </LinearLayout>
+                android:layout_marginTop="20dp"
+                android:text="Confirm Team"
+                android:textColor="@color/surface"
+                android:backgroundTint="@color/primaryBlue"
+                app:cornerRadius="20dp"
+                android:elevation="3dp"/>
 
         </LinearLayout>
-
     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

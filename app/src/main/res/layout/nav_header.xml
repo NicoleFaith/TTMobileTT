@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="176dp"
     android:gravity="bottom"
-    android:padding="16dp"
-    android:background="@drawable/headerdark"
+    android:padding="12dp"
+    android:background="@drawable/header"
     android:fitsSystemWindows="true"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
@@ -14,14 +14,6 @@
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:layout_gravity="center"
-        android:src="@drawable/logosquareblack"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Team Track"
-        android:layout_gravity="center"
-        android:textColor="@color/white"
-        android:textSize="12dp" />
+        android:src="@drawable/logobluwhi"/>
 
 </LinearLayout>

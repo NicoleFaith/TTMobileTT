@@ -3,44 +3,32 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/drawer_layout"
     android:fitsSystemWindows="true"
-    android:background="@color/white"
-    tools:openDrawer="start"
-    tools:context=".MainActivity">
+    android:background="@color/black"
+    tools:openDrawer="start">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/white">
+        android:background="@color/background">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/toolbarBackground"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/headerdark"
-                android:background="@android:color/transparent"
-                app:shapeAppearanceOverlay="@style/RoundedToolbar"/>
+            android:background="@color/surface"
+            android:elevation="4dp">
 
             <androidx.appcompat.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="-60dp"
-                app:cardCornerRadius="0dp"
-                app:cardElevation="0dp"
                 android:id="@+id/toolbar"
-                android:elevation="0dp"
-                android:background="@android:color/transparent"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@drawable/header"
+                android:elevation="4dp"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
                 android:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -49,20 +37,31 @@
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white" />
+            android:background="@color/surface"/>
 
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
         android:id="@+id/nav_view"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@color/blackPrimary"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu"
-        android:background="@color/black"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
-        app:itemTextAppearance="@font/interblack"/>
+        app:itemTextAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/AddBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_gravity="bottom|end"
+        android:backgroundTint="@color/primaryBlue"
+        android:src="@drawable/baseline_add_24"
+        app:maxImageSize="24dp"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

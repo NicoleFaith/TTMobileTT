@@ -2,32 +2,46 @@ package com.example.ttanader
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import androidx.fragment.app.Fragment
 import com.example.ttanader.create.Create
+import com.example.ttanader.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
+
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        // Use View Binding to inflate the layout
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Find the button by its ID
-        val button = view.findViewById<Button>(R.id.CreateWorkspaceBtn) // Change "myButton" to your actual Button ID
-
-        button.setOnClickListener {
+        // Set up click listener for the Create Team button
+        binding.CreateWorkspaceBtn.setOnClickListener {
             val intent = Intent(requireContext(), Create::class.java)
             startActivity(intent)
         }
+
+        // TODO: Load the projects assigned to or created by the user
+        loadProjects()
+    }
+
+    private fun loadProjects() {
+        // TODO: Fetch and display projects from the database
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

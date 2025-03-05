@@ -2,10 +2,7 @@ package com.example.ttanader
 
 import android.os.Bundle
 import android.widget.Button
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -13,6 +10,7 @@ class ManageMembersActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: MemberAdapter
     private var members = mutableListOf<Member>()
+    private var isAdmin = false // Default to false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,9 +19,17 @@ class ManageMembersActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.rvMembers)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        val isAdmin = true // Change based on logged-in user
-        members = getMembers() // Fetch members from SQLite or API
+        // Get logged-in user ID (Replace with actual user session logic)
+        val loggedInUserId = getLoggedInUserId()
 
+        // Fetch members and determine if user is admin
+        members = getMembersFromDatabase()
+        val projectCreatorId = getProjectCreatorId() // Fetch from database
+
+        // Determine if the logged-in user is the project creator (admin)
+        isAdmin = (loggedInUserId == projectCreatorId)
+
+        // Initialize adapter
         adapter = MemberAdapter(members, isAdmin) { member ->
             removeMember(member)
         }
@@ -34,18 +40,34 @@ class ManageMembersActivity : AppCompatActivity() {
         }
     }
 
-    private fun getMembers(): MutableList<Member> {
+    // Simulated function to get logged-in user ID (replace with actual logic)
+    private fun getLoggedInUserId(): String {
+        return "user_123" // Example user ID (Replace with actual user session data)
+    }
+
+    // Simulated function to get project creator ID (Replace with actual DB query)
+    private fun getProjectCreatorId(): String {
+        return "user_123" // Example: The creator of the project
+    }
+
+    private fun getMembersFromDatabase(): MutableList<Member> {
         return mutableListOf(
-            Member("John Doe", true),
-            Member("Jane Smith", false),
-            Member("Alex Brown", false)
+            Member("Jose", "user_123"), //sample
+            Member("Protacio", "user_456"), //sample
+            Member("Mercado", "user_789") //sample
         )
     }
 
     private fun removeMember(member: Member) {
-        members.remove(member)
-        adapter.notifyDataSetChanged()
+        val position = members.indexOf(member)
+        if (position != -1) {
+            members.removeAt(position)
+            adapter.notifyItemRemoved(position)
+            adapter.notifyItemRangeChanged(position, members.size)
+        }
     }
 }
 
-data class Member(val name: String, val isAdmin: Boolean)
+// Updated Member Data Class
+data class Member(val name: String, val userId: String)
+

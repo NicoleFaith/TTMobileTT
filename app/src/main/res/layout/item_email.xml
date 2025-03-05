@@ -6,16 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp"
-    android:background="@color/white">
+    android:background="@color/background">
 
+    <!-- Email Card -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="12dp"
         app:cardElevation="3dp"
-        android:layout_margin="12dp"
-        android:background="@android:color/white"
+        android:layout_margin="8dp"
+        android:backgroundTint="@color/surface"
         android:padding="12dp"
+        app:cardBackgroundColor="@color/surface"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
@@ -23,33 +25,34 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:background="@color/white"
-            android:padding="8dp">
+            android:weightSum="10">
 
-            <!-- Email Text -->
+            <!-- Email TextView with Chip-like UI -->
             <TextView
                 android:id="@+id/tvEmail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@android:color/black"
-                android:textSize="10sp"
+                android:layout_weight="8"
+                android:background="@drawable/email_bg"
+                android:textColor="@color/textPrimary"
+                android:textSize="14sp"
+                android:padding="12dp"
+                android:gravity="center_vertical"
                 android:textStyle="bold"
-                android:padding="8dp"
-                android:background="@drawable/emailbg"
-                android:gravity="center"/>
+                android:ellipsize="end"
+                android:maxLines="1"/>
 
-            <!-- Remove Button -->
-            <Button
+            <!-- Remove Button with Icon -->
+            <ImageButton
                 android:id="@+id/btnRemove"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Remove"
-                android:textColor="@android:color/white"
-                android:backgroundTint="@android:color/holo_red_dark"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="2"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="8dp"
-                android:layout_marginStart="8dp"/>
-
+                android:contentDescription="Remove"
+                android:src="@drawable/baseline_delete_outline_24"
+                app:tint="@color/red" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

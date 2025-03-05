@@ -6,9 +6,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LogSign.OpeningPage"
-    android:background="@color/white"
-    android:fitsSystemWindows="true">
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    tools:context=".LogSign.OpeningPage">
 
     <!-- Centered Layout -->
     <LinearLayout
@@ -25,21 +25,43 @@
         <!-- Logo -->
         <ImageView
             android:id="@+id/logoImage"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
             android:src="@drawable/logonobg"
             android:contentDescription="App Logo"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="20dp"
             android:scaleType="fitCenter"/>
+
+        <!-- App Title -->
+        <TextView
+            android:id="@+id/appTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Team Track"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/textPrimary"
+            android:layout_marginBottom="10dp"/>
+
+        <!-- Subtitle -->
+        <TextView
+            android:id="@+id/appSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Managing your productivity with ease"
+            android:textSize="16sp"
+            android:textColor="@color/darkGray"
+            android:layout_marginBottom="30dp"/>
 
         <!-- Progress Bar -->
         <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/progressBar2"
+            android:id="@+id/progressBar"
             style="@style/Widget.MaterialComponents.LinearProgressIndicator"
-            android:layout_width="300dp"
+            android:layout_width="280dp"
             android:layout_height="6dp"
-            app:trackColor="@color/black"
-            app:indicatorColor="@color/gray"
+            app:trackColor="@color/inputBackground"
+            app:indicatorColor="@color/primaryBlue"
             android:visibility="visible"
             android:layout_marginTop="10dp"/>
 
@@ -49,9 +71,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Loading..."
+            android:fontFamily="@font/poppins_bold"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="@color/textPrimary"
             android:layout_marginTop="10dp"/>
 
     </LinearLayout>
