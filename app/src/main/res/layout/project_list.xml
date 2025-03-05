@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/background"
     tools:context=".UserProject">
 
     <!-- Header Title -->
@@ -16,7 +16,7 @@
         android:text="Your Projects"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/textPrimary"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +28,7 @@
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/gray"
+        android:background="@color/darkGray"
         app:layout_constraintTop_toBottomOf="@id/tvHeader"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,13 +36,13 @@
 
     <!-- RecyclerView to Display Project Lists -->
     <androidx.recyclerview.widget.RecyclerView
-        android:background="@color/white"
         android:id="@+id/rvProjectLists"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="16dp"
         android:clipToPadding="false"
         android:overScrollMode="never"
+        android:background="@color/surface"
         app:layout_constraintTop_toBottomOf="@id/divider"
         app:layout_constraintBottom_toTopOf="@id/btnAddProject"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,9 +56,9 @@
         android:text="+ Add Project"
         android:textAllCaps="false"
         style="?attr/materialButtonOutlinedStyle"
-        android:backgroundTint="@color/black"
-        android:textColor="@color/white"
-        app:cornerRadius="25dp"
+        android:backgroundTint="@color/primaryBlue"
+        android:textColor="@color/surface"
+        app:cornerRadius="50dp"
         android:elevation="6dp"
         android:paddingHorizontal="24dp"
         android:paddingVertical="12dp"

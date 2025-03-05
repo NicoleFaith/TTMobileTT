@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/background"
     tools:context=".UserProject">
 
     <!-- Header Section -->
@@ -15,8 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:elevation="8dp"
-        app:cardCornerRadius="0dp"
-        app:cardBackgroundColor="@color/black"
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="@color/surface"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -36,8 +36,7 @@
                 android:contentDescription="Back Button"
                 android:scaleType="centerInside"
                 android:padding="8dp"
-                app:tint="@color/white"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:tint="@color/textPrimary"/>
 
             <!-- Team Title -->
             <TextView
@@ -46,8 +45,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Team Name"
-                android:textColor="@color/white"
-                android:textSize="22sp"
+                android:textColor="@color/textPrimary"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:gravity="center"/>
         </LinearLayout>
@@ -64,7 +63,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/rvProjectLists"
         android:visibility="gone"
-        app:tint="@color/gray" />
+        app:tint="@color/darkGray" />
 
     <!-- RecyclerView for Project Lists -->
     <androidx.recyclerview.widget.RecyclerView
@@ -73,13 +72,12 @@
         android:layout_height="0dp"
         android:padding="10dp"
         android:clipToPadding="false"
-        android:background="@color/white"
+        android:background="@color/surface"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@id/headerLayout"
         app:layout_constraintBottom_toTopOf="@id/btnAddProject"
         tools:listitem="@layout/list_item"
         android:scrollbars="horizontal"/>
-
 
     <!-- Right Arrow Indicator -->
     <ImageView
@@ -91,7 +89,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/rvProjectLists"
         android:visibility="gone"
-        app:tint="@color/gray" />
+        app:tint="@color/darkGray" />
 
     <!-- Floating Action Button for Adding Projects -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -99,9 +97,9 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         app:srcCompat="@drawable/baseline_add_24"
-        android:tint="@color/black"
+        android:tint="@color/white"
         android:elevation="12dp"
-        app:backgroundTint="@color/white"
+        app:backgroundTint="@color/primaryBlue"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"

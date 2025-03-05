@@ -32,26 +32,20 @@ class ProjectListAdapter(
             position: Int
         ) {
             listTitle.text = list.name
-
-            // ✅ Only the admin can see the "Add Task" button
             btnAddTask.visibility = if (isAdmin) View.VISIBLE else View.GONE
 
             // ✅ Set up RecyclerView for tasks
-            if (rvTasks.adapter == null) {
-                rvTasks.layoutManager = LinearLayoutManager(itemView.context)
-                rvTasks.adapter = TaskAdapter(
-                    context = itemView.context,
-                    tasks = list.tasks.toMutableList(), // ✅ Ensure it's mutable
-                    currentUser = currentUser,
-                    isAdmin = isAdmin,
-                    teamMembers = teamMembers
-                )
-            } else {
-                // ✅ Update TaskAdapter with new tasks
-                (rvTasks.adapter as TaskAdapter).updateTasks(list.tasks.toMutableList())
-            }
+            val taskAdapter = TaskAdapter(
+                context = itemView.context,
+                tasks = list.tasks.toMutableList(),
+                currentUser = currentUser,
+                isAdmin = isAdmin,
+                teamMembers = teamMembers
+            )
 
-            // ✅ Handle "Add Task" button click
+            rvTasks.layoutManager = LinearLayoutManager(itemView.context)
+            rvTasks.adapter = taskAdapter
+
             btnAddTask.setOnClickListener {
                 onAddTaskClick(position)
             }
@@ -69,19 +63,6 @@ class ProjectListAdapter(
     }
 
     override fun getItemCount(): Int = lists.size
-
-    // ✅ Add a new list dynamically
-    fun addList(newList: ProjectList) {
-        lists.add(newList)
-        notifyItemInserted(lists.size - 1)
-    }
-
-    // ✅ Update the entire project list dynamically
-    fun updateLists(updatedLists: List<ProjectList>) {
-        lists.clear()
-        lists.addAll(updatedLists)
-        notifyDataSetChanged()
-    }
 
     // ✅ Update a specific project's task list
     fun updateTaskList(listIndex: Int, updatedTasks: MutableList<Task>) {

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/white">
+    android:background="@color/background">
 
     <!-- Project List Title -->
     <TextView
@@ -15,31 +15,39 @@
         android:text="Project Title"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/textPrimary"
         android:paddingBottom="8dp"
         android:gravity="center" />
 
-    <!-- RecyclerView for Tasks -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvTasks"
+    <!-- Scrollable Area -->
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:nestedScrollingEnabled="false"
-        android:padding="8dp"
-        android:background="@android:color/transparent" />
+        android:fillViewport="true">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTasks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="true"
+            android:scrollbars="vertical"
+            android:padding="8dp"
+            android:background="@color/surface" />
+    </androidx.core.widget.NestedScrollView>
 
     <!-- Add Task Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAddTask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Task"
+        android:text="+ Add Task"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:cornerRadius="8dp"
-        android:backgroundTint="@color/black"
-        android:textColor="@color/white"
+        app:cornerRadius="12dp"
+        android:backgroundTint="@color/primaryBlue"
+        android:textColor="@color/surface"
+        android:elevation="6dp"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="8dp" />
 
